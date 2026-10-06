@@ -13,7 +13,6 @@
     background-color: var(--brand-color);
     border: 3px solid rgba(205, 205, 205, 0.2);
     border-top: 3px solid rgba(255, 255, 255, 0.2);
-    box-sizing: border-box;
     color: white;
     box-shadow: var(--button-shadow);
 }
@@ -40,6 +39,10 @@
     background-color: rgba(255, 255, 255, 0.175);
 }
 
+.bright-soft {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 .dark {
     background-color: rgba(105, 105, 105, 0.075);
     border: 3px solid rgba(160, 160, 170, 0.2);
@@ -52,9 +55,13 @@
     margin-top: calc(var(--layout-margin) * 2);
 }
 
-.large-button {
+.large {
     height: 50px;
     border-radius: var(--box-margin);
+}
+
+.wide {
+    padding-inline: calc(var(--layout-margin) * 2);
 }
 
 /* Popup title */
@@ -125,6 +132,8 @@
     object-fit: contain;
     user-select: none;
     pointer-events: none;
+    border-radius: var(--content-margin);
+    margin-bottom: var(--content-margin);
 }
 
 .tooltip-close {
@@ -133,6 +142,7 @@
     right: var(--box-margin);
     padding: 3px;
     opacity: 0.75;
+    filter: drop-shadow(0 0 5px var(--dark-shadow-color));
     transition: opacity 250ms ease;
 }
 

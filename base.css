@@ -26,7 +26,7 @@ body {
     font-family: Barlow, sans-serif;
     /* Disable touch action again since body could be a scroll container */
     touch-action: none;
-    background-color: var(--panorama-background);
+    background-color: var(--background-color);
 }
 
 /* Button */
@@ -231,7 +231,6 @@ textarea {
     background-color: transparent;
     font-size: 22px;
     transition: background-color 250ms ease;
-    box-sizing: border-box;
 }
 
 textarea:focus {
