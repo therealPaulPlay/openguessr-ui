@@ -1,6 +1,6 @@
 # OpenGuessr UI
 
-The user interface design system for OpenGuessr, the free location guessing game. Install via `npm install openguessr-ui`.
+The user interface design system for OpenGuessr. Install via `npm install openguessr-ui`.
 
 Made to be used with [Svelte](https://svelte.dev).
 
@@ -9,13 +9,13 @@ Made to be used with [Svelte](https://svelte.dev).
 
 ## Concepts
 
-- **Boxes:** Boxes house controls or text inside of popups or containers. Always use `--box-margin` for padding, border radius, and usually for gap as well (unless tightly-packed controls are wanted).
+- **Boxes:** Boxes house controls, text, or other boxes inside of popups or containers. Always use `--box-margin` for padding, spacing, and border radius (unless when placed inside another box, then `--content-margin` should be used for the border radius).
 
-- **Containers:** Containers are similar to boxes, but sit one level above. The popup acts as a layout/container hybird, don't put a container in it. But layouts don't, so this is where containers are important. They have a border radius of `--layout-margin` and a padding and when applicable gap of `--box-margin`.
+- **Containers:** Containers are similar to boxes, but they contain them. The popup acts as a layout/container hybird, so don't put a container inside it. They have a border radius of `--layout-margin` and a padding and when applicable gap of `--box-margin`.
 
-- **Layouts:** Layouts are effectively pages, and they should use `--layout-margin` as the gap between containers as well as for the padding to the viewport edges. To separate larger sections in layouts, use `--layout-spacer`. Putting a margin or padding of `--layout-spacer` at the bottom of a page is also recommended to leave some slack.
+- **Layouts:** Layouts are effectively pages, and they should use `--layout-margin` as the gap between containers as well as for the padding to the viewport edges. To separate larger sections in layouts, use `--layout-spacer`. Putting a margin or padding of `--layout-spacer` at the top and bottom of a page is recommended to leave some slack.
 
-- **Panels:** Panels are flexible floating UI, used for HUDs or quick action button rows. They typically include controls rather than loads of text or images. Use `--panel-margin` for border radius, padding, and gap. If the content inside is rounded strongly (e.g. large buttons), use `--layout-margin` only for the border radii. The gap or margin between related panels should be `--box-margin` if they use `--panel-margin` for the border radii, otherwise `--layout-margin`.
+- **Panels:** Panels are flexible floating UI elements. They typically include controls (e.g. buttons) rather than loads of text or images, perfect for HUDs. Use `--box-margin` for border radius, `--panel-margin` for padding and spacing. If the content inside is rounded strongly (e.g. large buttons), use `--layout-margin` only for the border radii. The gap or margin between related panels should be `--box-margin` if they use `--box-margin` for the border radii, otherwise `--layout-margin`.
 
 **The hierarchy:**
 1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements (and `--layout-spacer` between unrelated ones), padding, and border radii of children. Typically, with fullscreen menus there's only one element in layout space (e.g. a main or the body itself), while in a gameplay scene multiple HUD elemnts sit here. 
@@ -26,11 +26,11 @@ Made to be used with [Svelte](https://svelte.dev).
 
 4. On the fourth level there can still be smaller boxes, and they still use `--box-margin` for padding and spacing, but use `--content-margin` for border radii. There can also be content on this level.
 
-The content level (inside buttons, chips, or other controls) uses spacing of `--content-margin`. Popups sit in between layouts and containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii. Panels typically live in layout space (level 1) but have unique spacing rules (as outlined above).
+The content level (inside buttons, chips, or other controls) uses spacing of `--content-margin`. Popups sit in between layouts and containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii. Panels typically live in layout space (level 1), but have unique spacing rules (as outlined above).
 
 ## Styling
 
-This is how boxes, containers, layouts, and panels should be styled.
+These are the base styling guidelines. Buliding on them is encouraged for creative designs.
 
 ### Variables
 
@@ -163,11 +163,11 @@ At the default icon size (which always matches the font size), using `2.25` as t
 
 Since Lucide icons don't follow a strict universal strokeWidth and size, some might look better at different values, in which case it is okay to deviate from these defaults. For example, the `X` looks a bit thinner than many other icons.
 
-### Overfade
+### Scrollable areas
 
-Overfade, available via the package `overfade`, is a library used for scroll containers. It applies a dynamic mask-image on the overflowing container. When a container that contains overflowing text content is scrolled all the way to the top, the top of the text is not faded out, only the bottom is, and vice-versa.
+Overfade, available via the package `overfade`, is a library used for scrollable areas. It applies a dynamic mask-image on the overflowing element's parent. When an element that contains overflowing text content is scrolled all the way to the top, the top of the text is not faded out, only the bottom is, and vice-versa.
 
-The classes are dynamic by themselves, adding e.g. `of-top` only when the container is overflowing is not needed – always apply them.
+So, since the classes are dynamic by themselves, adding e.g. `of-top` only when the containing element is overflowing is incorrect.
 
 To use it, add its classes:
 - `of-top`: Fade out towards the top
@@ -176,13 +176,13 @@ To use it, add its classes:
 - `of-right`: Fade out towards the right
 - `of-length-x`: Multiply the length of the fade, defaults to 1 (optional, x = factor)
 
-These classes should not be applied directly on boxes, since that would fade their background color. Instead, the scrollable content should go in a separate div with overfade classes applied inside of e.g. a box.
+These classes should not be applied directly on boxes or containers, since that would fade their background color. Instead, the scrollable content should go in a separate child div with overfade classes applied.
 
-Scroll containers should be spaced in a way that scrollable content is intentionally visibly cut off when scrolling is allowed to communicate that to the user.
+Scroll containers should be spaced in a way that scrollable content is intentionally visibly cut off when scrolling is allowed to communicate that that scrolling is possible.
 
 ### Opacity values
 
-Opacity values used are typically `0.25`, `0.5`, `0.75` and `1`. Supportive text, such as the explanation for a toggle, can be `0.75` or even `0.5`.
+Opacity values used are typically `0.25`, `0.5`, `0.75` and `1`. Supportive text, such as the explanation for a feature, can be `0.75` or even `0.5`. Direct labels, e.g. for controls, should be full opacity.
 
 ### Images
 
@@ -206,15 +206,15 @@ The popup component is used for dialogs. It takes the following props:
 - `frameless`: Reduces the padding, e.g. for iFrames
 - `onUserClose`: Called when the user closes the popup
 
-A common design pattern is to include a heading at the top of a popup, effectively a popup title. For this, the built-in `popup-title` class can be used.
-
-Many popups include a central action button which typically gets the `large popup-bottom-button` treatment.
+A common design pattern is to include a heading at the top of a popup. For this, the built-in `popup-title` class can be used.
 
 ```html
 <div class="popup-title">
     <h1>Settings</h1>
 </div>
 ```
+
+Many popups include a central action button which gets the `large popup-bottom-button` treatment.
 
 ### Chip
 
@@ -297,7 +297,7 @@ Tooltips are mostly used for icon buttons that have no text, and persistent ones
 
 ## Scroll bars
 
-Typically, scroll bars should be hidden via `scrollbar-width: none`. there can be exceptions, such as textareas the user is working inside, where the lack of a scroll bar can be annoying.
+Typically, scroll bars should be hidden via `scrollbar-width: none`. There can be exceptions, such as textareas the user is working inside, where the lack of a scroll bar worsens the experience.
 
 ## Text formatting guidelines
 

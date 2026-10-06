@@ -155,7 +155,7 @@
 
 	<ExamplePortal title="4. Chips">
 		<div class="panel row">
-			<Chip text="Live" />
+			<Chip text="Now live" />
 			<Chip text="New" red italic mutedOpacity={false} />
 			<Chip text="More info" onclick={() => {}} mutedOpacity={false} />
 		</div>
@@ -316,7 +316,7 @@
 	}
 
 	.panel {
-		border-radius: var(--panel-margin);
+		border-radius: var(--box-margin);
 		padding: var(--panel-margin);
 		background-color: var(--panel-color);
 		backdrop-filter: blur(var(--normal-blur));
