@@ -4,8 +4,8 @@ The user interface design system for OpenGuessr, the free location guessing game
 
 Made to be used with [Svelte](https://svelte.dev).
 
-> [!NOTE]
-> While this library is source-available, it is not intended for commercial use.
+> [!IMPORTANT]
+> While this library is publicly available, commercial use is not permitted.
 
 ## Concepts
 
