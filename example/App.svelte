@@ -339,7 +339,7 @@
 				onclick={() =>
 					showConfirmPopup(
 						"About",
-						"This map's locations are generated live.'",
+						"This map's locations are generated live.",
 					)}>Info only</button>
 		</div>
 	</ExamplePortal>
