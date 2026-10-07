@@ -7,7 +7,11 @@ Made to be used with [Svelte](https://svelte.dev).
 > [!IMPORTANT]
 > While this library is publicly available, commercial use is not permitted.
 
-## Concepts
+## Structure
+
+These core concepts define how UI should be structured.
+
+### Core concepts
 
 - **Boxes:** Boxes house controls, text, or other boxes.
 
@@ -17,7 +21,8 @@ Made to be used with [Svelte](https://svelte.dev).
 
 - **Layouts:** Layouts are typically full pages that containers or panels sit in.
 
-**The hierarchy:**
+### Hierarchy
+
 1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements (and `--layout-spacer` between unrelated ones), padding, and border radii of children.
 
 2. The second level is containers, where the spacing and padding is `--box-margin`, and the border radii of children are as well.
@@ -26,17 +31,17 @@ Made to be used with [Svelte](https://svelte.dev).
 
 4. On the fourth level there is either content or smaller boxes. Smaller boxes still use `--box-margin` for padding and spacing, but `--content-margin` for border radii.
 
-The content level (inside buttons, chips, or other controls) uses spacing of `--content-margin`. Placing content directly into the layout space is not allowed, it needs to sit inside a box or panel.
+The content level (inside buttons, chips, tabs, or other controls) uses spacing of `--content-margin`. Placing content directly into layouts or containers is not allowed, it **needs** to sit inside a box or panel.
 
 Popups take some properties from layouts and some from containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii. Panels typically live in layout space (level 1), but have unique spacing rules (as outlined above).
 
 ## Styling
 
-These are the base styling guidelines.
+This defines how UI should be styled.
 
 ### Variables
 
-These variables are used for margins, paddings, and gaps.
+These variables are used for margins, paddings, and gaps:
 
 | Variable | Value |
 | -------- | ----- |
@@ -46,7 +51,7 @@ These variables are used for margins, paddings, and gaps.
 | --layout-margin | 15px |
 | --layout-spacer | 50px |
 
-These variables are used for colors.
+These variables are used for colors:
 
 | Variable | Explanation |
 | -------- | ------- |
@@ -64,7 +69,10 @@ These variables are used for colors.
 | --background-color | Opaque background |
 | --dark-shadow-color | Text or drop shadows |
 
-These variabels are used for box shadows.
+> [!TIP]
+> There should be at most one `--brand-color` element visible at a time. Usually, the primary action.
+
+These variabels are used for box shadows:
 
 | Variable | Used for |
 | -------- | ------- |
@@ -76,7 +84,7 @@ These variabels are used for box shadows.
 | --bulb-shadow | Pills, chips, badges |
 | --panel-shadow | Floating elements (containers, panels..) |
 
-These variables are used for blur.
+These variables are used for blur:
 
 | Variable | Value |
 | -------- | ------- |
@@ -87,7 +95,7 @@ These variables are used for blur.
 
 ### Boxes
 
-Boxes typically get this base styling:
+Boxes typically use this base styling:
 
 ```css
 .box {
@@ -100,7 +108,7 @@ Boxes typically get this base styling:
 }
 ```
 
-Their width should not grow to fit their container or the Popup they are in if the content inside is shorter.
+Their width should not grow to fit their container or the Popup they are in.
 
 #### Text inside boxes
 
@@ -108,7 +116,7 @@ Since boxes have rather tight padding and text naturally adds top and bottom spa
 
 ### Panels
 
-Panels typically get this base styling:
+Panels typically use this base styling:
 
 ```css
 .panel {
@@ -116,12 +124,12 @@ Panels typically get this base styling:
     border-radius: var(--box-margin); /* Or --layout-margin if they contain large buttons */
     padding: var(--panel-margin);
     gap: var(--panel-margin); /* When applicable */
-    backdrop-filter: blur(var(--normal-blur));
+    backdrop-filter: blur(var(--normal-blur)); /* Only if the layout doesn't apply elevated or strong blur already */
     box-shadow: var(--panel-shadow);
 }
 ``` 
 
-Panels that house large buttons which are rounder than usual buttons should have a border radius of `--layout-margin` since we don't want uneven corners. Don't mix them, panels should stick to only large or only small buttons.
+Panels that house large buttons which are rounder than usual buttons should have a border radius of `--layout-margin` to avoid uneven corners. Don't mix them, panels should stick to only large or only small buttons.
 
 When panels sit inside layouts with a strong background color (e.g. `--overlay-color-dark`), their backgorund color should be `--box-color` instead of `--panel-color` to avoid layering two blue-ish tones (which will produce a color that looks too vibrant).
 
@@ -129,21 +137,24 @@ The gap or margin between related panels should be `--box-margin` if they use `-
 
 ### Containers
 
-Containers typically get this base styling:
+Containers typically use this base styling:
 
 ```css
 .container {
-    background-color: var(--box-color);
+    background-color: var(--panel-color);
     border-radius: var(--layout-margin);
     padding: var(--box-margin);
     gap: var(--box-margin); /* When applicable */
+    backdrop-filter: blur(var(--normal-blur)); /* Only if the layout doesn't apply elevated or strong blur already */
     box-shadow: var(--panel-shadow);
 }
 ``` 
 
+Like panels, containers inside layouts with a strong background color should use `--box-color` instead of `--panel-color`.
+
 ### Layouts
 
-Layouts typically get this base styling:
+Layouts typically use this base styling:
 
 ```css
 .layout {
@@ -240,7 +251,7 @@ A common design pattern is to include a heading at the top of a popup. For this,
 </div>
 ```
 
-Many popups include a central action button which gets the `large popup-bottom-button` treatment.
+Many popups include a central action button which gets the `large popup-bottom-button` treatment. Never combine this with the `wide` class.
 
 ### Chip
 
@@ -354,7 +365,7 @@ The room code input component is used for entering 6-character room codes. It ta
 
 ### Tabs
 
-The tabs component is great for choosing settings or views. It takes the following props:
+The tabs component is great for choosing settings or views, as well as for On/Off switches. It takes the following props:
 
 - `tabs`: Text strings or icons
 - `selected`: Selected tab's content
@@ -420,7 +431,7 @@ import basicButtonSound from "openguessr-ui/sounds/basic_button.ogg";
 
 | Sound | Purpose |
 | ----- | ------- |
-| basic_button | Default sound for standard buttons |
+| basic_button | Default sound for standard buttons and tabs |
 | juicy_button | Selection-like choices (e.g. map selection) |
 | start_button | Starting or joining a game |
 | toggle_button | Anything that toggles, e.g. collapsibles |

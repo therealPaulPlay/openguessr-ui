@@ -10,7 +10,7 @@
 		maximumText,
 		minimumValue,
 		maximumValue,
-		minValueWidth = "30px",
+		minValueWidth = "35px",
 		onchange,
 	} = $props();
 	import { Minus, Plus } from "@lucide/svelte";

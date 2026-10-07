@@ -263,7 +263,7 @@
 						bind:value={rounds}
 						initialValue={5}
 						minimum={1}
-						maximum={9}
+						maximum={10}
 						note="rounds" />
 				</div>
 				<div class="box box-flex">
