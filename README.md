@@ -9,13 +9,13 @@ Made to be used with [Svelte](https://svelte.dev).
 
 ## Concepts
 
-- **Boxes:** Boxes house controls, text, or other boxes inside of popups or containers. Always use `--box-margin` for padding, spacing, and border radius (unless when placed inside another box, then `--content-margin` should be used for the border radius).
+- **Boxes:** Boxes house controls, text, or other boxes inside of popups or containers.
 
-- **Containers:** Containers are similar to boxes, but they contain them. The popup acts as a layout/container hybird, so don't put a container inside it. They have a border radius of `--layout-margin` and a padding and when applicable gap of `--box-margin`.
+- **Panels:** Panels are flexible floating UI elements. They typically include controls (e.g. buttons) rather than loads of text or images, perfect for HUDs.
 
-- **Layouts:** Layouts are effectively pages, and they should use `--layout-margin` as the gap between containers as well as for the padding to the viewport edges. To separate larger sections in layouts, use `--layout-spacer`. Putting a margin or padding of `--layout-spacer` at the top and bottom of a page is recommended to leave some slack.
+- **Containers:** Containers contain boxes. The popup acts as a layout/container hybird, so don't put a container inside it.
 
-- **Panels:** Panels are flexible floating UI elements. They typically include controls (e.g. buttons) rather than loads of text or images, perfect for HUDs. Use `--box-margin` for border radius, `--panel-margin` for padding and spacing. If the content inside is rounded strongly (e.g. large buttons), use `--layout-margin` only for the border radii. The gap or margin between related panels should be `--box-margin` if they use `--box-margin` for the border radii, otherwise `--layout-margin`.
+- **Layouts:** Layouts are typically full pages that containers or panels sit in.
 
 **The hierarchy:**
 1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements (and `--layout-spacer` between unrelated ones), padding, and border radii of children. Typically, with fullscreen menus there's only one element in layout space (e.g. a main or the body itself), while in a gameplay scene multiple HUD elemnts sit here. 
@@ -94,6 +94,7 @@ Boxes typically get this base styling:
     background-color: var(--box-color);
     border-radius: var(--box-margin);
     padding: var(--box-margin);
+    gap: var(--box-margin); /* When applicable */
     box-shadow: var(--box-shadow);
     max-width: fit-content;
 }
@@ -112,14 +113,19 @@ Panels typically get this base styling:
 ```css
 .panel {
     background-color: var(--panel-color);
-    border-radius: var(--box-margin);
+    border-radius: var(--box-margin); /* Or --layout-margin if they contain large buttons */
     padding: var(--panel-margin);
+    gap: var(--panel-margin); /* When applicable */
     backdrop-filter: blur(var(--normal-blur));
     box-shadow: var(--panel-shadow);
 }
 ``` 
 
 Panels that house large buttons which are rounder than usual buttons should have a border radius of `--layout-margin` since we don't want uneven corners.
+
+When panels sit inside layouts with a strong background color set (e.g. `--overlay-color-dark`), their backgorund color should be `--box-color` instead of `--panel-color` to avoid layering two blue-ish tones (which will produce a color that looks too vibrant).
+
+The gap or margin between related panels should be `--box-margin` if they use `--box-margin` for the border radii, otherwise `--layout-margin`.
 
 ### Containers
 
@@ -130,6 +136,7 @@ Containers typically get this base styling:
     background-color: var(--box-color);
     border-radius: var(--layout-margin);
     padding: var(--box-margin);
+    gap: var(--box-margin); /* When applicable */
     box-shadow: var(--panel-shadow);
 }
 ``` 
@@ -142,6 +149,8 @@ Layouts typically get this base styling:
 .layout {
     background-color: var(--overlay-color-dark);
     padding: var(--layout-margin);
+    padding-block: var(--layout-spacer); /* For full pages to leave some slack at the top and bottom */
+    gap: var(--layout-margin); /* When applicable */
     backdrop-filter: blur(var(--elevated-blur));
     max-width: 1100px;
 }
@@ -176,6 +185,7 @@ Overfade, available via the package `overfade`, is a library used for scrollable
 So, since the classes are dynamic by themselves, adding e.g. `of-top` only when the containing element is overflowing is incorrect.
 
 To use it, add its classes:
+
 - `of-top`: Fade out towards the top
 - `of-bottom`: Fade out towards the bottom 
 - `of-left`: Fade out towards the left
@@ -210,7 +220,7 @@ The popup component is used for dialogs. It takes the following props:
 - `slim`: Reduces the max width
 - `verySlim`: Reduces the max width further
 - `frameless`: Reduces the padding, e.g. for iFrames
-- `onUserClose`: Called when the user closes the popup
+- `onuserclose`: Called when the user closes the popup
 
 A common design pattern is to include a heading at the top of a popup. For this, the built-in `popup-title` class can be used:
 
@@ -385,7 +395,7 @@ Usage example:
 - `imageAspectRatio`: Aspect ratio of the image
 - `maxWidth`: Max width in pixels
 - `state`: A `$state({ visible: false })` object, makes the tooltip persistent and controllable
-- `onClose`: Called when the close button is used
+- `onclose`: Called when the close button is used
 - `showDelay`: Delay in ms before showing
 - `zIndex`: Tooltip z-index
 - `mobile`: Set to false to hide the tooltip on mobile
@@ -400,13 +410,13 @@ import basicButtonSound from "openguessr-ui/sounds/basic_button.ogg";
 
 | Sound | Purpose |
 | ----- | ------- |
-| basic_button | Default button sound. |
-| juicy_button | Selection-like choices (e.g. map selection). |
-| start_button | Starting or joining a game. |
-| toggle_button | Anything that toggles, e.g. collapsibles. |
-| change_value | Changing a value, e.g. the ticker. |
-| item_select | Selecting an item, e.g. a pin, badge, or flag. |
-| item_locked | Trying to select a locked item. |
+| basic_button | Default sound for standard buttons |
+| juicy_button | Selection-like choices (e.g. map selection) |
+| start_button | Starting or joining a game |
+| toggle_button | Anything that toggles, e.g. collapsibles |
+| change_value | Changing a value, e.g. the ticker |
+| item_select | Selecting an item, e.g. a pin, badge, or flag |
+| item_locked | Trying to select a locked item |
 
 The components don't play sounds themselves. Instead, play them via their callbacks:
 
@@ -426,4 +436,4 @@ Typically, scroll bars should be hidden via `scrollbar-width: none`. There can b
 
 ## Flexibility
 
-This design system is highly expandable. Instead of using fixed components for everything, most elements are built using the provided CSS variables. Game UIs should feel handcrafted instead of generic, there are many scenarios where custom controls or designs feel more intuitive than any preexisting component would. So, don't use generic buttons for a fancy map selection screen, or don't use a slider for a health bar – creativity is what makes games feel special.
+This design system is highly expandable. Instead of using fixed components for everything, most elements are built using the provided CSS variables. Game UIs should feel handcrafted instead of generic, there are many scenarios where custom controls feel more intuitive than any preexisting component would. So, don't use generic buttons for a fancy map selection screen, or don't use a slider for a health bar – creativity is what makes games feel special.

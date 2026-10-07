@@ -8,7 +8,7 @@
 	import { backOut } from "svelte/easing";
 	import { fade, scale } from "svelte/transition";
 
-	let { children, frameless, slim, verySlim, open = $bindable(false), onUserClose } = $props();
+	let { children, frameless, slim, verySlim, open = $bindable(false), onuserclose } = $props();
 
 	let zIndex = $state(0);
 
@@ -34,7 +34,7 @@
 	});
 
 	function close() {
-		onUserClose?.();
+		onuserclose?.();
 		open = false;
 	}
 </script>

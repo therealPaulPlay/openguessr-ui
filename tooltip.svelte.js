@@ -1,6 +1,6 @@
 import { computePosition, flip, shift, offset, arrow, autoUpdate } from "@floating-ui/dom";
 
-export function tooltip({ text, imageSrc, imageAspectRatio = "1 / 1", state, onClose, maxWidth = imageSrc ? 150 : 300, zIndex, showDelay = 0, mobile = true }) {
+export function tooltip({ text, imageSrc, imageAspectRatio = "1 / 1", state, onclose, maxWidth = imageSrc ? 150 : 300, zIndex, showDelay = 0, mobile = true }) {
     return (node) => {
         let tooltipElement, arrowElement, textElement, imageElement, closeElement;
         let visible = false;
@@ -60,7 +60,7 @@ export function tooltip({ text, imageSrc, imageAspectRatio = "1 / 1", state, onC
             closeElement.addEventListener('click', () => {
                 state.visible = false;
                 try {
-                    onClose?.();
+                    onclose?.();
                 } catch (error) {
                     console.error("Error occured in tooltip close callback:", error);
                 }

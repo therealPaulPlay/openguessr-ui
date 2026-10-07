@@ -372,7 +372,7 @@
 			class="layout layout-slim layout-slim-with-padding"
 			style:flex-direction="column">
 			<RoomCodeInput />
-			<div class="panel" style:margin-top="var(--layout-margin)">
+			<div class="container" style:margin-top="var(--layout-margin)">
 				<div
 					style:display="flex"
 					style:height="40px"

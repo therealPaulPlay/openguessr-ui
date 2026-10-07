@@ -6,7 +6,7 @@
 <Popup
 	verySlim={true}
 	bind:open={errorPopupState.popupOpen}
-	onUserClose={() => {
+	onuserclose={() => {
 		if (errorPopupState.reload) window.location.reload();
 	}}>
 	<h1 class="popup-title">{errorPopupState.title}</h1>
