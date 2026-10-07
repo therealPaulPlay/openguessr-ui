@@ -26,7 +26,9 @@ Made to be used with [Svelte](https://svelte.dev).
 
 4. On the fourth level there can still be smaller boxes, and they still use `--box-margin` for padding and spacing, but use `--content-margin` for border radii. There can also be content on this level.
 
-The content level (inside buttons, chips, or other controls) uses spacing of `--content-margin`. Popups sit in between layouts and containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii. Panels typically live in layout space (level 1), but have unique spacing rules (as outlined above).
+The content level (inside buttons, chips, or other controls) uses spacing of `--content-margin`. Placing content directly into the layout space is not allowed, it needs to sit inside a box or panel.
+
+Popups sit in between layouts and containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii. Panels typically live in layout space (level 1), but have unique spacing rules (as outlined above).
 
 ## Styling
 
@@ -153,7 +155,7 @@ To create a button, apply the `standard-button` class. This will create a red pr
 
 There is a tertiary button, and it's created by applying `dark`, but it's not used in combination with other button variants. Instead, it's strictly for repetitive actions to reduce mental load. For example, a sidebar with dozens of items, where each one has a small "X" button to remove it.
 
-Buttons that go directly into panels should typically apply `large`, which will also increase their border radius. Large buttons with small text inside (e.g. single short word) often look unnaturally short, bumping the padding by adding `wide` helps.
+Large buttons with small text inside (e.g. single short word) often look unnaturally short, bumping the padding by adding `wide` helps.
 
 ### Icons
 
@@ -162,6 +164,10 @@ Lucide, available via the package `@lucide/svelte`, should be used for icons.
 At the default icon size (which always matches the font size), using `2.25` as the stroke width is suggested. Icons placed inside of buttons right next to text commonly look best at size `20`. Depending on the icon, raising the strokeWidth to `2.5` in that case can be adequate.
 
 Since Lucide icons don't follow a strict universal strokeWidth and size, some might look better at different values, in which case it is okay to deviate from these defaults. For example, the `X` looks a bit thinner than many other icons.
+
+Icons should typically have the color white. They inherit color, but if they aren't placed inside an element, such as a paragraph, that sets one, it needs to be set explicitly.
+
+The spacing between text and an icon inside content should be `--content-margin`.
 
 ### Scrollable areas
 
