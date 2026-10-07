@@ -1,6 +1,6 @@
 @font-face {
     font-family: Barlow;
-    src: url('/fonts/barlow-condensed-medium.woff2');
+    src: url('./fonts/barlow-condensed-medium.woff2');
     font-display: swap;
 }
 
@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 
-/* This UI library is for games, not sites, we don't want double-tap to zoom or drag down to refresh here */
+/* This UI library is for games, not sites, double-tap to zoom or drag down to refresh are not wanted */
 html {
     overscroll-behavior: none;
     touch-action: none;

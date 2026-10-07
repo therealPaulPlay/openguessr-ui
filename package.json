@@ -12,8 +12,9 @@
 		"confirmPopup.svelte.js",
 		"errorPopup.svelte.js",
 		"components",
-		"images",
-		"sounds",
+		"fonts",
+		"vector-graphics",
+		"sound-effects",
 		"variables.css",
 		"base.css",
 		"classes.css"
@@ -27,7 +28,8 @@
 		"./variables.css": "./variables.css",
 		"./base.css": "./base.css",
 		"./classes.css": "./classes.css",
-		"./sound-effects/*": "./sound-effects/*"
+		"./sound-effects/*": "./sound-effects/*",
+		"./fonts/*": "./fonts/*"
 	},
 	"peerDependencies": {
 		"@lucide/svelte": "^1.0.0",
