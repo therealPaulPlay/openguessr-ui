@@ -352,7 +352,7 @@
 					errorPopup(
 						"Failed to load map",
 						"An error occured loading the map.",
-						"Error 404: Map not found",
+						"Error: 404 - Map not found",
 					)}>With error code</button>
 			<button
 				class="standard-button bright"
