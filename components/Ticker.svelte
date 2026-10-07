@@ -33,7 +33,6 @@
 
 <div class="ticker bright-soft">
 	<button
-		id="round-minus"
 		class="standard-button bright"
 		disabled={internalValue === minimum}
 		onclick={() => {
@@ -47,7 +46,6 @@
 		<p class="ticker-note">{note}</p>
 	{/if}
 	<button
-		id="round-plus"
 		class="standard-button bright"
 		disabled={internalValue === maximum}
 		onclick={() => {

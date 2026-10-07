@@ -228,16 +228,50 @@ The chip component is used for small pieces of information, such as a "New" or "
 - `onclick`: Makes the chip clickable
 - `class`, `style`: Class passthrough
 
-### Drawer
+### Collapsible
 
-The drawer component is used to contain information that should be tucked away, e.g. information only valuable for a portion of players. It takes the following props:
+The collapsible component is used to contain information that should be tucked away, e.g. information only valuable for a portion of players. It takes the following props:
 
 - `title`: The title text
-- `isOpen`: Whether the drawer is expanded
+- `isOpen`: Whether the collapsible is expanded
 - `children`: The content inside
 - `inPage`: Set to false when used in popups, containers etc.
 - `ontoggle`: Called whenever the open state changes
 - `class`: Class passthrough
+
+### InfoBanner
+
+The info banner component is used for short pieces of information. It takes the following props:
+
+- `text`: The banner text
+- `children`: Content to render instead of text
+- `inPage`: Set to false when used in popups, containers etc.
+- `nowrap`: Keeps the text on one line
+- `center`: Centers the content
+- `transition`: Slides the banner in and out
+- `class`, `style`: Class and style passthrough
+
+### Notification
+
+The notification component is used for short messages at the top of the screen, optionally with an action. Mount it e.g. in the root layout. It takes the following props:
+
+- `top`: Distance from the top of the viewport, defaults to `--layout-margin`
+- `onaccept`: Called when the accept button is used
+- `ondismiss`: Called when the dismiss button is used
+
+Notifications are shown via `showNotification(text, acceptAction, dismissAction, viewOnly, clickableText, textClickFunction)`:
+
+- `text`: The notification text, `%s` marks where the clickable text goes
+- `acceptAction`: Called on accept, also shows the accept button
+- `dismissAction`: Called on dismiss
+- `viewOnly`: Shows a view icon on the accept button
+- `clickableText`: Clickable text inserted at `%s`, e.g. a player name
+- `textClickFunction`: Called when the clickable text is clicked
+
+```js
+showNotification("Copied!");
+showNotification("Accept event invite?", () => joinEvent());
+```
 
 ### Tabs
 
@@ -294,6 +328,30 @@ Tooltips are mostly used for icon buttons that have no text, and persistent ones
 - `showDelay`: Delay in ms before showing
 - `zIndex`: Tooltip z-index
 - `mobile`: Set to false to hide the tooltip on mobile
+
+## Sound effects
+
+UI sound effects are available as `.ogg` files and can be played with any audio library:
+
+```js
+import basicButtonSound from "openguessr-ui/sounds/basic_button.ogg";
+```
+
+| Sound | Purpose |
+| ----- | ------- |
+| basic_button | Default button sound. |
+| juicy_button | Selection-like choices (e.g. map selection). |
+| start_button | Starting or joining a game. |
+| toggle_button | Anything that toggles, e.g. collapsibles. |
+| change_value | Changing a value, e.g. the ticker. |
+| item_select | Selecting an item, e.g. a pin, badge, or flag. |
+| item_locked | Trying to select a locked item. |
+
+The components don't play sounds themselves. Instead, play them via their callbacks:
+
+- Collapsible `ontoggle`: `toggle_button`
+- Ticker `onchange`: `change_value`
+- Notification `onaccept`, `ondismiss`: `basic_button`
 
 ## Scroll bars
 

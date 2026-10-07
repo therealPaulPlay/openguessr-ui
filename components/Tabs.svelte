@@ -55,10 +55,6 @@
 		cursor: not-allowed;
 	}
 
-	.tabs-group:hover {
-		scale: 1;
-	}
-
 	.tabs-group:has(button:active) {
 		transform: scale(0.98);
 	}
@@ -79,10 +75,6 @@
 		flex-grow: 1;
 		box-shadow: none !important;
 		pointer-events: auto;
-	}
-
-	.tab-button::after {
-		display: none;
 	}
 
 	.tab-button:active {

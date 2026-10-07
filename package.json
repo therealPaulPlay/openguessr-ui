@@ -8,7 +8,9 @@
 	"files": [
 		"index.js",
 		"tooltip.svelte.js",
+		"notifications.svelte.js",
 		"components",
+		"sounds",
 		"variables.css",
 		"base.css",
 		"classes.css"
@@ -21,7 +23,8 @@
 		},
 		"./variables.css": "./variables.css",
 		"./base.css": "./base.css",
-		"./classes.css": "./classes.css"
+		"./classes.css": "./classes.css",
+		"./sounds/*": "./sounds/*"
 	},
 	"peerDependencies": {
 		"@lucide/svelte": "^1.0.0",

@@ -1,12 +1,15 @@
 <script>
 	import {
 		Chip,
-		Drawer,
+		Collapsible,
+		InfoBanner,
+		Notification,
 		Popup,
 		Tabs,
 		Ticker,
 		TitleSeparator,
 		tooltip,
+		showNotification,
 	} from "../index.js";
 	import ExamplePortal from "./ExamplePortal.svelte";
 	import {
@@ -161,41 +164,41 @@
 		</div>
 	</ExamplePortal>
 
-	<ExamplePortal title="5. Drawers">
+	<ExamplePortal title="5. Collapsibles">
 		<div class="layout-flex">
 			<div class="layout layout-flex-item" style:align-items="start">
 				<div class="container" style:width="400px">
 					<div class="box">
 						<p style:padding-inline="var(--content-margin)" class="supportive">
 							Some content might not be relevant to all users, so
-							it sits inside the drawer.
+							it sits inside the collapsible.
 						</p>
 					</div>
-					<Drawer title="Rarely used" inPage={false}>
+					<Collapsible title="Rarely used" inPage={false}>
 						<p
 							class="box-text supportive"
 							style:display="block"
 							style:padding-inline="var(--content-margin)">
 							Content appears here.
 						</p>
-					</Drawer>
+					</Collapsible>
 				</div>
 			</div>
 			<div
 				class="layout layout-flex-item"
 				style:align-items="start"
 				style:width="430px">
-				<Drawer title="Additional details">
+				<Collapsible title="Additional details">
 					<div class="box">
 						<p
 							class="box-text supportive"
 							style:padding-inline="var(--content-margin)">
-							Drawers can be used in pages too. Notice how the
-							text is now inside a box since the drawer is
+							Collapsibles can be used in pages too. Notice how the
+							text is now inside a box since the collapsible is
 							floating?
 						</p>
 					</div>
-				</Drawer>
+				</Collapsible>
 			</div>
 		</div>
 	</ExamplePortal>
@@ -264,7 +267,51 @@
 			</div>
 		</div>
 	</ExamplePortal>
+
+	<ExamplePortal title="9. Notifications">
+		<div class="panel row">
+			<button
+				class="standard-button bright"
+				onclick={() => showNotification("Copied!")}>Simple</button>
+			<button
+				class="standard-button bright"
+				onclick={() =>
+					showNotification("Accept event invite?", () => {})}
+				>With action</button>
+			<button
+				class="standard-button bright"
+				onclick={() =>
+					showNotification(
+						"%s sent you a message.",
+						() => {},
+						undefined,
+						true,
+						"Paul",
+						() => {},
+					)}>Clickable text</button>
+		</div>
+	</ExamplePortal>
+
+	<ExamplePortal title="10. Info banners">
+		<div
+			class="layout layout-slim layout-slim-with-padding"
+			style:flex-direction="column">
+			<InfoBanner text="Inactive players are hidden." />
+			<div class="container" style:width="400px">
+				<div class="box">
+					<p
+						class="supportive"
+						style:padding-inline="var(--content-margin)">
+						Clicking continue will remove this map.
+					</p>
+				</div>
+				<InfoBanner text="This can't be undone." inPage={false} />
+			</div>
+		</div>
+	</ExamplePortal>
 </main>
+
+<Notification />
 
 <style>
 	main {

@@ -13,13 +13,13 @@
 </script>
 
 <div
-	class="drawer-container {className}"
+	class="collapsible-container {className}"
 	style:border-radius={inPage ? "var(--layout-margin)" : "var(--box-margin)"}
 	style:box-shadow={inPage ? "var(--panel-shadow)" : "var(--box-shadow)"}
 >
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div
-		class="drawer-toggle"
+		class="collapsible-toggle"
 		role="button"
 		tabindex={0}
 		onclick={() => {
@@ -28,7 +28,7 @@
 		}}
 	>
 		<p style:margin-left="var(--content-margin)">{title}</p>
-		<div class="drawer-icon">
+		<div class="collapsible-icon">
 			<ChevronDown
 				style="margin-bottom: -4px; transition: transform 250ms ease; {isOpen ? 'transform: rotate(180deg)' : ''}"
 			/>
@@ -36,7 +36,7 @@
 	</div>
 	{#if isOpen}
 		<div transition:slide={{ duration: 250 }} style:width="100%" style:margin-top="var(--box-margin)">
-			<div transition:fade={{ duration: 250 }} class="drawer-content">
+			<div transition:fade={{ duration: 250 }} class="collapsible-content">
 				{@render children?.()}
 			</div>
 		</div>
@@ -44,13 +44,13 @@
 </div>
 
 <style>
-	.drawer-container {
+	.collapsible-container {
 		width: 100%;
 		background-color: var(--box-color);
 		padding: var(--box-margin);
 	}
 
-	.drawer-toggle {
+	.collapsible-toggle {
 		display: flex;
 		width: 100%;
 		gap: var(--box-margin);
@@ -60,17 +60,16 @@
 		cursor: pointer;
 	}
 
-	.drawer-icon {
+	.collapsible-icon {
 		color: white;
 		padding: var(--content-margin);
-		padding-inline: var(--content-margin);
 	}
 
-	.drawer-toggle:hover {
+	.collapsible-toggle:hover {
 		opacity: 0.5;
 	}
 
-	.drawer-content {
+	.collapsible-content {
 		display: flex;
 		flex-direction: column;
 		gap: var(--box-margin);
