@@ -13,9 +13,9 @@ These core concepts define how UI should be structured.
 
 ### Core concepts
 
-- **Boxes:** Boxes house controls, text, or other boxes.
+- **Boxes:** Boxes house controls, text, images, or other boxes.
 
-- **Panels:** Panels are flexible floating UI elements. They typically include controls (e.g. buttons) rather than loads of text or images, perfect for HUDs.
+- **Panels:** Panels are used for floating UI. They typically include controls rather than loads of text or images, perfect for HUDs.
 
 - **Containers:** Containers contain boxes. The popup acts as a layout/container hybird that also contains boxes.
 
@@ -23,7 +23,7 @@ These core concepts define how UI should be structured.
 
 ### Hierarchy
 
-1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements (and `--layout-spacer` between unrelated ones), padding, and border radii of children.
+1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements, the padding, and the border radii of children. For separating unrelated elements, `--layout-spacer` is used.
 
 2. The second level is containers, where the spacing and padding is `--box-margin`, and the border radii of children are as well.
 
@@ -31,7 +31,7 @@ These core concepts define how UI should be structured.
 
 4. On the fourth level there is either content or smaller boxes. Smaller boxes still use `--box-margin` for padding and spacing, but `--content-margin` for border radii.
 
-The content level (inside buttons, chips, tabs, or other controls) uses spacing of `--content-margin`. Placing content directly into layouts or containers is not allowed, it **needs** to sit inside a box or panel.
+The content level (inside buttons, chips, tabs, or other controls) uses spacing of `--content-margin`. Placing content directly into layouts or containers is not allowed, it needs to sit inside a box or panel.
 
 Popups take some properties from layouts and some from containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii. Panels typically live in layout space (level 1), but have unique spacing rules (as outlined above).
 
@@ -64,20 +64,20 @@ These variables are used for colors:
 | --overlay-color | Dark overlays |
 | --overlay-color-dark | Full-screen menu overlays |
 | --bright-green-color | Experience, perks |
-| --bright-green-color-soft| Indicators, subtle |
+| --bright-green-color-soft| Indicators |
 | --bright-green-color-dark | Experience, perk backgrounds |
 | --background-color | Opaque background |
 | --dark-shadow-color | Text or drop shadows |
 
 > [!TIP]
-> There should be at most one `--brand-color` element visible at a time (the primary action). Green colors should **not** be used for success, use bright styling instead (e.g. `rgba(255, 255, 255, 0.2)`).
+> There should be at most one `--brand-color` element visible at a time (the primary action). Green colors should not be used for success, use bright styling instead (e.g. `rgba(255, 255, 255, 0.2)`).
 
 These variabels are used for box shadows:
 
 | Variable | Used for |
 | -------- | ------- |
 | --button-shadow | Buttons |
-| --button-shadow-dark | Subtle buttons |
+| --button-shadow-dark | Dark buttons |
 | --box-shadow-top | Boxes that fade out towards the bottom |
 | --box-shadow-bottom | Boxes that fade out towards the top |
 | --box-shadow | Boxes |
@@ -108,7 +108,7 @@ Boxes typically use this base styling:
 }
 ```
 
-Their width should not grow to fit their container or the Popup they are in.
+Their width shouldn't grow to fit the container or Popup they are in.
 
 #### Text inside boxes
 
@@ -169,7 +169,7 @@ Layouts typically use this base styling:
 
 ### Buttons
 
-Buttons should always be placed in a box or panel, not just on a blank page. Large buttons should **not** be put into a box.
+Buttons should always be placed in a box or panel, not just on a blank page. Large buttons shouldn't be put into a box.
 
 To create a button, apply the `standard-button` class. This will create a red primary button. To make it secondary, add `bright`.
 
@@ -181,7 +181,7 @@ Large buttons with short text inside often look unnaturally slim when placed as 
 
 Regular buttons typically have the icon placed on the left side. 
 
-Large buttons with text place the icon towards the right and use `space-between` to ensure that when multiple buttons are present, icons and text are perfectly aligned below each other, making it easier to scan through them at a glance.
+Large buttons with text place the icon towards the right and use `space-between` to ensure that when multiple buttons are present in a stack, icons and text are perfectly horizontally aligned, making it easier to scan through them at a glance.
 
 ### Icons
 
@@ -263,7 +263,7 @@ The chip component is used for small pieces of information, such as a "New" or "
 - `italic`: Makes the text italic, typically combined with red
 - `mutedOpacity`: Makes the text muted, red variant typically disables this
 - `onclick`: Makes the chip clickable
-- `class`, `style`: Class passthrough
+- `class`, `style`: Class and style passthrough
 
 ### Collapsible
 
@@ -361,7 +361,7 @@ The room code input component is used for entering 6-character room codes. It ta
 
 - `segments`: The entered characters
 - `inPage`: Set to false when used in panels, boxes etc.
-- `onsubmit`: Called with the code when enter or the submit button is pressed
+- `onsubmit`: Called with the code when the enter or the submit button is pressed
 
 ### Tabs
 
@@ -436,12 +436,12 @@ import basicButtonSound from "openguessr-ui/sound-effects/basic_button.ogg";
 | basic_button | Default sound for standard buttons and tabs |
 | juicy_button | Selection-like choices (e.g. map selection) |
 | start_button | Starting or joining a game |
-| toggle_button | Anything that toggles, e.g. collapsibles |
-| change_value | Changing a value, e.g. the ticker |
-| item_select | Selecting an item, e.g. a pin, badge, or flag |
+| toggle_button | Anything that toggles (e.g. collapsibles) |
+| change_value | Changing a value (e.g. through a ticker) |
+| item_select | Selecting an item (e.g. a pin, badge, or flag) |
 | item_locked | Trying to select a locked item |
 
-The components don't play sounds themselves. Instead, play them via their callbacks:
+The components don't play sounds themselves. Instead, they should be played via callbacks:
 
 - Collapsible `ontoggle`: `toggle_button`
 - Ticker `onchange`: `change_value`
