@@ -245,12 +245,12 @@
 
 	<ExamplePortal title="10. Info banners">
 		<div class="layout layout-slim layout-slim-with-padding" style:flex-direction="column">
-			<InfoBanner text="Inactive players are hidden." />
+			<InfoBanner text="Inactive players are hidden." inPage={true} />
 			<div class="container" style:width="400px">
 				<div class="box">
 					<p class="supportive" style:padding-inline="var(--content-margin)">Clicking continue will remove this map.</p>
 				</div>
-				<InfoBanner text="This can't be undone." inPage={false} />
+				<InfoBanner text="This can't be undone." />
 			</div>
 		</div>
 	</ExamplePortal>

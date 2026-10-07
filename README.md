@@ -319,7 +319,7 @@ The info banner component is used for short pieces of information. It takes the 
 
 - `text`: The banner text
 - `children`: Content to render instead of text
-- `inPage`: Set to false when used in popups, containers etc.
+- `inPage`: Set to true when used in layouts
 - `nowrap`: Keeps the text on one line
 - `center`: Centers the content
 - `transition`: Toggles the slide transition
@@ -360,7 +360,7 @@ showNotification("Accept event invite?", () => joinEvent());
 The room code input component is used for entering 6-character room codes. It takes the following props:
 
 - `segments`: The entered characters
-- `inPage`: Set to false when used in panels, boxes etc., this also adds a submit button
+- `inPage`: Set to false when used in panels, boxes etc.
 - `onsubmit`: Called with the code when enter or the submit button is pressed
 
 ### Tabs

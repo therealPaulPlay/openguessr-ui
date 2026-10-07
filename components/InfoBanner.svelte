@@ -5,7 +5,7 @@
 	let {
 		text,
 		children,
-		inPage = true,
+		inPage = false,
 		class: classes = "",
 		style = "",
 		nowrap = false,
@@ -28,7 +28,7 @@
 		{:else if children}
 			<p class:p-nowrap={nowrap}>{@render children()}</p>
 		{:else}
-			<p>Default info (placeholder).</p>
+			<p>Default info.</p>
 		{/if}
 	</div>
 </div>
