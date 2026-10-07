@@ -212,7 +212,7 @@ The popup component is used for dialogs. It takes the following props:
 - `frameless`: Reduces the padding, e.g. for iFrames
 - `onUserClose`: Called when the user closes the popup
 
-A common design pattern is to include a heading at the top of a popup. For this, the built-in `popup-title` class can be used.
+A common design pattern is to include a heading at the top of a popup. For this, the built-in `popup-title` class can be used:
 
 ```html
 <div class="popup-title">
@@ -245,6 +245,43 @@ The collapsible component is used to contain information that should be tucked a
 - `ontoggle`: Called whenever the open state changes
 - `class`: Class passthrough
 
+### ConfirmPopup
+
+The confirm popup component is used to request user confirmation or to display information. Mount it e.g. in the root layout. It takes the following props:
+
+- `onconfirm`: Called when the user confirms
+
+Confirm popups are shown via `showConfirmPopup(title, text, executeFunction, confirmText)`:
+
+- `title`: The popup title
+- `text`: The description
+- `executeFunction`: Called on confirm, also shows the confirm button
+- `confirmText`: Text of the confirm button, defaults to "Confirm"
+
+Usage example:
+
+```js
+showConfirmPopup("Remove item?", "The item will be removed from your favorites.", () => removeItem(), "Remove");
+```
+
+### ErrorPopup
+
+The error popup component is used to inform the user about errors. Mount it e.g. in the root layout.
+
+Error popups are shown via `errorPopup(title, description, errorCode, reload, hideDontShowAgainOption)`:
+
+- `title`: The popup title
+- `description`: The description
+- `errorCode`: The error code (usually passed by the server)
+- `reload`: Reloads the page when the popup is closed, also shows the popup even if the user chose to hide errors
+- `hideDontShowAgainOption`: Hides the "Never show again" option
+
+Usage example:
+
+```js
+errorPopup("Failed to load map", "An error occured loading this map.", "Code 404: Map not found");
+```
+
 ### InfoBanner
 
 The info banner component is used for short pieces of information. It takes the following props:
@@ -255,6 +292,12 @@ The info banner component is used for short pieces of information. It takes the 
 - `nowrap`: Keeps the text on one line
 - `center`: Centers the content
 - `transition`: Slides the banner in and out
+- `class`, `style`: Class and style passthrough
+
+### LoadingSpinner
+
+The loading spinner component can be displayed while large content loads, such as panoramas or full pages. It takes the following props:
+
 - `class`, `style`: Class and style passthrough
 
 ### Notification
@@ -274,10 +317,20 @@ Notifications are shown via `showNotification(text, acceptAction, dismissAction,
 - `clickableText`: Clickable text inserted at `%s`, e.g. a player name
 - `textClickFunction`: Called when the clickable text is clicked
 
+Usage example:
+
 ```js
 showNotification("Copied!");
 showNotification("Accept event invite?", () => joinEvent());
 ```
+
+### RoomCodeInput
+
+The room code input component is used for entering 6-character room codes. It takes the following props:
+
+- `segments`: The entered characters
+- `inPage`: Set to false when used in panels, boxes etc., this also adds a submit button
+- `onsubmit`: Called with the code when enter or the submit button is pressed
 
 ### Tabs
 
@@ -319,7 +372,9 @@ Attachments utilize Svelte's `{@attach...}` syntax.
 
 ### Tooltip
 
-Tooltips are mostly used for icon buttons that have no text, and persistent ones for tutorials. Usage example:
+Tooltips are mostly used for icon buttons that have no text, and persistent ones for tutorials. 
+
+Usage example:
 
 ```html
 <button {@attach tooltip({ text: "Settings" })}><GearsIcon /></button>

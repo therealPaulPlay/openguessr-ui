@@ -2,14 +2,20 @@
 	import {
 		Chip,
 		Collapsible,
+		ConfirmPopup,
+		ErrorPopup,
 		InfoBanner,
+		LoadingSpinner,
 		Notification,
 		Popup,
+		RoomCodeInput,
 		Tabs,
 		Ticker,
 		TitleSeparator,
 		tooltip,
 		showNotification,
+		showConfirmPopup,
+		errorPopup,
 	} from "../index.js";
 	import ExamplePortal from "./ExamplePortal.svelte";
 	import {
@@ -25,6 +31,11 @@
 	let time = $state(60);
 	let tooltipState = $state({ visible: false });
 </script>
+
+<!-- Mount Notification, ConfirmPoup and ErrorPopup -->
+<Notification />
+<ConfirmPopup />
+<ErrorPopup />
 
 <main>
 	<h1 class="title">Examples</h1>
@@ -169,7 +180,9 @@
 			<div class="layout layout-flex-item" style:align-items="start">
 				<div class="container" style:width="400px">
 					<div class="box">
-						<p style:padding-inline="var(--content-margin)" class="supportive">
+						<p
+							style:padding-inline="var(--content-margin)"
+							class="supportive">
 							Some content might not be relevant to all users, so
 							it sits inside the collapsible.
 						</p>
@@ -193,9 +206,9 @@
 						<p
 							class="box-text supportive"
 							style:padding-inline="var(--content-margin)">
-							Collapsibles can be used in pages too. Notice how the
-							text is now inside a box since the collapsible is
-							floating?
+							Collapsibles can be used in pages too. Notice how
+							the text is now inside a box since the collapsible
+							is floating?
 						</p>
 					</div>
 				</Collapsible>
@@ -309,9 +322,75 @@
 			</div>
 		</div>
 	</ExamplePortal>
-</main>
 
-<Notification />
+	<ExamplePortal title="11. Confirm popups">
+		<div class="panel row">
+			<button
+				class="standard-button bright"
+				onclick={() =>
+					showConfirmPopup(
+						"Remove item?",
+						"The item will be removed from your favorites.",
+						() => showNotification("Map removed."),
+						"Remove",
+					)}>With action</button>
+			<button
+				class="standard-button bright"
+				onclick={() =>
+					showConfirmPopup(
+						"About",
+						"This map's locations are generated live.'",
+					)}>Info only</button>
+		</div>
+	</ExamplePortal>
+
+	<ExamplePortal title="12. Error popups">
+		<div class="panel row">
+			<button
+				class="standard-button bright"
+				onclick={() =>
+					errorPopup(
+						"Failed to load map",
+						"An error occured loading the map.",
+						"Error 404: Map not found",
+					)}>With error code</button>
+			<button
+				class="standard-button bright"
+				onclick={() =>
+					errorPopup(
+						"Connection lost",
+						"You were disconnected from the server.",
+						undefined,
+						false,
+						true,
+					)}>Text only</button>
+		</div>
+	</ExamplePortal>
+
+	<ExamplePortal title="13. Room code input">
+		<div
+			class="layout layout-slim layout-slim-with-padding"
+			style:flex-direction="column">
+			<RoomCodeInput />
+			<div class="panel" style:margin-top="var(--layout-margin)">
+				<div
+					style:display="flex"
+					style:height="40px"
+					style:width="250px">
+					<RoomCodeInput inPage={false} />
+				</div>
+			</div>
+		</div>
+	</ExamplePortal>
+
+	<ExamplePortal title="14. Loading spinner">
+		<div
+			class="layout layout-slim layout-slim-with-padding"
+			style:max-width="400px">
+			<LoadingSpinner />
+		</div>
+	</ExamplePortal>
+</main>
 
 <style>
 	main {

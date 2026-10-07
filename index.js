@@ -1,10 +1,16 @@
 export { default as Chip } from "./components/Chip.svelte";
 export { default as Collapsible } from "./components/Collapsible.svelte";
+export { default as ConfirmPopup } from "./components/ConfirmPopup.svelte";
+export { default as ErrorPopup } from "./components/ErrorPopup.svelte";
 export { default as InfoBanner } from "./components/InfoBanner.svelte";
+export { default as LoadingSpinner } from "./components/LoadingSpinner.svelte";
 export { default as Notification } from "./components/Notification.svelte";
 export { default as Popup } from "./components/Popup.svelte";
+export { default as RoomCodeInput } from "./components/RoomCodeInput.svelte";
 export { default as Tabs } from "./components/Tabs.svelte";
 export { default as Ticker } from "./components/Ticker.svelte";
 export { default as TitleSeparator } from "./components/TitleSeparator.svelte";
 export { tooltip } from "./tooltip.svelte.js";
 export { showNotification } from "./notifications.svelte.js";
+export { showConfirmPopup } from "./confirmPopup.svelte.js";
+export { errorPopup } from "./errorPopup.svelte.js";
