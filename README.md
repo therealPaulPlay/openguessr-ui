@@ -411,6 +411,8 @@ Usage example:
 <button {@attach tooltip({ text: "Settings" })}><GearsIcon /></button>
 ```
 
+Options:
+
 - `text`: The tooltip text
 - `imageSrc`: Image shown above the text
 - `imageAspectRatio`: Aspect ratio of the image
