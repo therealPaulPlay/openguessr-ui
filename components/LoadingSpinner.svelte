@@ -1,5 +1,5 @@
 <script>
-	import compassSpinner from "../images/compass_spinner.png";
+	import compassSpinner from "../images/compass_spinner.svg";
 
 	let { class: classes = "", style } = $props();
 </script>
