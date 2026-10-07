@@ -23,12 +23,10 @@
 >
 	<Info strokeWidth={2.25} size={22} color="white" style="opacity: 50%; flex-shrink: 0;" />
 	<div class="text-container of-left of-right">
-		{#if text}
+		{#if text || !children}
 			<p class:p-nowrap={nowrap}>{text}</p>
 		{:else if children}
 			<p class:p-nowrap={nowrap}>{@render children()}</p>
-		{:else}
-			<p>Default info.</p>
 		{/if}
 	</div>
 </div>

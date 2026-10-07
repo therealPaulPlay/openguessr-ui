@@ -1,11 +1,11 @@
 export const notification = $state({
     visible: false,
-    text: "Default",
+    text: "",
     viewOnly: false,
-    clickableText: undefined,
-    textClickFunction: undefined,
-    acceptFunction: undefined,
-    dismissFunction: undefined
+    clickableText: null,
+    textClickFunction: null,
+    acceptFunction: null,
+    dismissFunction: null
 });
 
 let hideNotificationTimeout;

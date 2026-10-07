@@ -1,7 +1,7 @@
 <script>
 	let {
 		red = false,
-		text = "Default",
+		text,
 		italic = false,
 		mutedOpacity = true,
 		children,

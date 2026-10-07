@@ -1,5 +1,5 @@
 <script>
-	let { text = "Default", noMargin = false, class: classes } = $props();
+	let { text, noMargin = false, class: classes } = $props();
 </script>
 
 <div class="flex-container {classes}" class:no-margin={noMargin}>

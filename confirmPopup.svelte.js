@@ -1,9 +1,9 @@
 export const confirmPopup = $state({
     visible: false,
-    title: "Default",
-    description: "Default",
-    confirmText: "Default",
-    executeFunction: undefined
+    title: "",
+    description: "",
+    confirmText: "",
+    executeFunction: null
 });
 
 export function showConfirmPopup(title, text, executeFunction, confirmText) {
