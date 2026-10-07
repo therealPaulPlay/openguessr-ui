@@ -69,25 +69,26 @@
 					<p style:padding-inline="var(--content-margin)">
 						Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
 						sed diam nonumy eirmod tempor invidunt ut labore et
-						dolore magna aliquyam erat, sed diam voluptua. At vero
-						eos et accusam et justo duo dolores et ea rebum. Stet
-						clita kasd gubergren, no sea takimata sanctus est Lorem
-						ipsum dolor sit amet. Lorem ipsum dolor sit amet,
+						dolore magna aliquyam erat, sed diam voluptua. <br /><br />At
+						vero eos et accusam et justo duo dolores et ea rebum.
+						Stet clita kasd gubergren, no sea takimata sanctus est
+						Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
 						consetetur sadipscing elitr, sed diam nonumy eirmod
 						tempor invidunt ut labore et dolore magna aliquyam erat,
-						sed diam voluptua. At vero eos et accusam et justo duo
-						dolores et ea rebum. Stet clita kasd gubergren, no sea
-						takimata sanctus est Lorem ipsum dolor sit amet. Lorem
-						ipsum dolor sit amet, consetetur sadipscing elitr, sed
-						diam nonumy eirmod tempor invidunt ut labore et dolore
-						magna aliquyam erat, sed diam voluptua. At vero eos et
-						accusam et justo duo dolores et ea rebum. Stet clita
-						kasd gubergren, no sea takimata sanctus est Lorem ipsum
-						dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+						sed diam voluptua. <br /><br />At vero eos et accusam et
+						justo duo dolores et ea rebum. Stet clita kasd
+						gubergren, no sea takimata sanctus est Lorem ipsum dolor
+						sit amet. Lorem ipsum dolor sit amet, consetetur
 						sadipscing elitr, sed diam nonumy eirmod tempor invidunt
 						ut labore et dolore magna aliquyam erat, sed diam
-						voluptua. At vero eos et accusam et justo duo dolores et
-						ea rebum. Stet clita kasd gubergren, no sea takimata
+						voluptua. <br /><br />At vero eos et accusam et justo
+						duo dolores et ea rebum. Stet clita kasd gubergren, no
+						sea takimata sanctus est Lorem ipsum dolor sit amet.
+						Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+						sed diam nonumy eirmod tempor invidunt ut labore et
+						dolore magna aliquyam erat, sed diam voluptua.
+						<br /><br />At vero eos et accusam et justo duo dolores
+						et ea rebum. Stet clita kasd gubergren, no sea takimata
 						sanctus est Lorem ipsum dolor sit amet.
 					</p>
 				</div>
@@ -146,8 +147,8 @@
 				</h3>
 				<div class="box box-dark">
 					<ol class="supportive">
-						<li>Containers are your best friend</li>
-						<li>Popups are too</li>
+						<li>Containers first</li>
+						<li>Then boxes</li>
 					</ol>
 				</div>
 				<div class="box box-flex">
@@ -183,8 +184,7 @@
 						<p
 							style:padding-inline="var(--content-margin)"
 							class="supportive">
-							Some content might not be relevant to all users, so
-							it sits inside the collapsible.
+							Some content isn't relevant to all players.
 						</p>
 					</div>
 					<Collapsible title="Rarely used" inPage={false}>
