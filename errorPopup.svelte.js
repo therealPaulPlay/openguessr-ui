@@ -9,14 +9,14 @@ export const errorPopupState = $state({
 });
 
 export function errorPopup(popupTitle, popupDescription, popupErrorCode, reloadPopup, hideDontShowAgainOption) {
-  errorPopupState.hideDisableOption = hideDontShowAgainOption || false;
+  errorPopupState.hideDisableOption = hideDontShowAgainOption;
 
   // If errors should be shown or it is a critical error that needs a reload, show the popup
   if (!errorPopupState.hideErrors || reloadPopup) {
     errorPopupState.title = popupTitle;
     errorPopupState.description = popupDescription;
-    errorPopupState.errorCode = popupErrorCode || "";
-    errorPopupState.reload = reloadPopup || false;
+    errorPopupState.errorCode = popupErrorCode;
+    errorPopupState.reload = reloadPopup;
     errorPopupState.popupOpen = true;
   }
 }

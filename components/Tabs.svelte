@@ -2,7 +2,7 @@
 	let {
 		tabs = [],
 		selectedIndex = $bindable(0),
-		selected = $bindable(tabs[selectedIndex || 0]), // Bindable selected tab as a prop
+		selected = $bindable(tabs[selectedIndex]), // Bindable selected tab as a prop
 		onchange,
 		disabled = false,
 		children,
