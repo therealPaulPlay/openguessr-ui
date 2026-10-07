@@ -2,20 +2,14 @@
 	import { ChevronDown } from "@lucide/svelte";
 	import { slide, fade } from "svelte/transition";
 
-	let {
-		title,
-		isOpen = $bindable(false),
-		children,
-		class: className = "",
-		inPage = true,
-		ontoggle,
-	} = $props();
+	let { title, isOpen = $bindable(false), children, class: className = "", inPage = true, ontoggle } = $props();
 </script>
 
 <div
 	class="collapsible-container {className}"
 	style:border-radius={inPage ? "var(--layout-margin)" : "var(--box-margin)"}
-	style:box-shadow={inPage ? "var(--panel-shadow)" : "var(--box-shadow)"}>
+	style:box-shadow={inPage ? "var(--panel-shadow)" : "var(--box-shadow)"}
+>
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div
 		class="collapsible-toggle"
@@ -24,23 +18,18 @@
 		onclick={() => {
 			isOpen = !isOpen;
 			ontoggle?.(isOpen);
-		}}>
+		}}
+	>
 		<p class="collapsible-title">{title}</p>
 		<div class="collapsible-icon">
 			<ChevronDown
-				style="margin-bottom: -4px; transition: transform 250ms ease; {isOpen
-					? 'transform: rotate(180deg)'
-					: ''}" />
+				style="margin-bottom: -4px; transition: transform 250ms ease; {isOpen ? 'transform: rotate(180deg)' : ''}"
+			/>
 		</div>
 	</div>
 	{#if isOpen}
-		<div
-			transition:slide={{ duration: 250 }}
-			style:width="100%"
-			style:margin-top="var(--box-margin)">
-			<div
-				transition:fade={{ duration: 250 }}
-				class="collapsible-content">
+		<div transition:slide={{ duration: 250 }} style:width="100%" style:margin-top="var(--box-margin)">
+			<div transition:fade={{ duration: 250 }} class="collapsible-content">
 				{@render children?.()}
 			</div>
 		</div>

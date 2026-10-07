@@ -1,0 +1,6 @@
+export default {
+  plugins: ['prettier-plugin-svelte'],
+  useTabs: true,
+  singleAttributePerLine: false,
+  printWidth: 120,
+};

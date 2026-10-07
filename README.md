@@ -175,7 +175,7 @@ To create a button, apply the `standard-button` class. This will create a red pr
 
 There is a tertiary button, and it's created by applying `dark`, but it's not used in combination with other button variants. Instead, it's strictly for repetitive actions to reduce mental load since it is less eye-catching. For example, a sidebar with dozens of items, where each one has a small "X" button to delete it.
 
-Large buttons with small text inside (e.g. single short word) often look unnaturally short, bumping the padding by adding `wide` resolves this.
+Large buttons with short text inside often look unnaturally slim when placed as the only button inside a panel, bumping the padding by adding `wide` resolves this.
 
 ### Icons in buttons
 
@@ -426,7 +426,7 @@ Usage example:
 UI sound effects are available as `.ogg` files and can be played with any audio library:
 
 ```js
-import basicButtonSound from "openguessr-ui/sounds/basic_button.ogg";
+import basicButtonSound from "openguessr-ui/sound-effects/basic_button.ogg";
 ```
 
 | Sound | Purpose |

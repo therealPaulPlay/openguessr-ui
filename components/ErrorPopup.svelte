@@ -8,7 +8,8 @@
 	bind:open={errorPopupState.popupOpen}
 	onuserclose={() => {
 		if (errorPopupState.reload) window.location.reload();
-	}}>
+	}}
+>
 	<h1 class="popup-title">{errorPopupState.title}</h1>
 	<div>
 		<p class="slight-bottom-margin">{errorPopupState.description}</p>

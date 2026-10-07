@@ -6,13 +6,13 @@
 		onchange,
 		disabled = false,
 		children,
-		class: className = "", // Alias for HTML class attribute
+		class: className = "",
 	} = $props();
 
 	// Handle tab selection
 	function selectTab(tab) {
 		selected = tab;
-		selectedIndex = tabs.findIndex((e) => e == tab);
+		selectedIndex = tabs.findIndex((e) => e === tab);
 		onchange?.(selected, selectedIndex);
 	}
 </script>

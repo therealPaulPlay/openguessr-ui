@@ -101,7 +101,7 @@
 		box-shadow: var(--box-shadow);
 	}
 
-	/* Compact mode plus the button */
+	/* Compact in-box variant, plus the button */
 
 	.segmented-input-box-compact .segment-input::placeholder {
 		font-size: 18px;

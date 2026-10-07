@@ -139,7 +139,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="container">
+			<div class="container" style:width="300px">
 				<h3
 					class="box-text"
 					style:padding-inline="var(--content-margin)">

@@ -31,10 +31,12 @@
 		hideNotification();
 	}
 
-	let notificationTextArray = $derived(notification.clickableText ? notification.text?.split("%s") : [notification.text]);
+	let notificationTextArray = $derived(
+		notification.clickableText ? notification.text?.split("%s") : [notification.text],
+	);
 </script>
 
-<div class="notification-holder" style:top={top}>
+<div class="notification-holder" style:top>
 	{#if notification.visible}
 		<div id="notification-bar" transition:fly={{ y: -20, duration: 250 }}>
 			<p id="notification-text">
@@ -42,7 +44,9 @@
 					{notificationTextArray[index]}
 					{#if notificationTextArray.length > index + 1}
 						<!-- svelte-ignore a11y_click_events_have_key_events -->
-						<span class="clickable-text" onclick={notification.textClickFunction} role="button" tabindex="0">{notification.clickableText}</span>
+						<span class="clickable-text" onclick={notification.textClickFunction} role="button" tabindex="0"
+							>{notification.clickableText}</span
+						>
 					{/if}
 				{/each}
 			</p>

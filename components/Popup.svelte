@@ -1,5 +1,5 @@
 <script module>
-	const openZIndexes = []; // Z of every open popup, in ascending order
+	const openZIndexes = [];
 </script>
 
 <script>

@@ -3,7 +3,7 @@
 </script>
 
 <section>
-	<h2>{title}</h2>
+	<h2 style:padding-inline="var(--content-margin)">{title}</h2>
 	<div class="portal">
 		{@render children?.()}
 	</div>
@@ -15,10 +15,6 @@
 		flex-direction: column;
 		gap: var(--layout-margin);
 		margin-bottom: var(--layout-spacer);
-	}
-
-	h2 {
-		padding-inline: var(--content-margin);
 	}
 
 	.portal {
