@@ -9,30 +9,30 @@ Made to be used with [Svelte](https://svelte.dev).
 
 ## Concepts
 
-- **Boxes:** Boxes house controls, text, or other boxes inside of popups or containers.
+- **Boxes:** Boxes house controls, text, or other boxes.
 
 - **Panels:** Panels are flexible floating UI elements. They typically include controls (e.g. buttons) rather than loads of text or images, perfect for HUDs.
 
-- **Containers:** Containers contain boxes. The popup acts as a layout/container hybird, so don't put a container inside it.
+- **Containers:** Containers contain boxes. The popup acts as a layout/container hybird that also contains boxes.
 
 - **Layouts:** Layouts are typically full pages that containers or panels sit in.
 
 **The hierarchy:**
-1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements (and `--layout-spacer` between unrelated ones), padding, and border radii of children. Typically, with fullscreen menus there's only one element in layout space (e.g. a main or the body itself), while in a gameplay scene multiple HUD elemnts sit here. 
+1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements (and `--layout-spacer` between unrelated ones), padding, and border radii of children.
 
 2. The second level is containers, where the spacing and padding is `--box-margin`, and the border radii of children are as well.
 
 3. The third level is boxes, where the spacing and padding is still `--box-margin`, but the border radii of children are `--content-margin`.
 
-4. On the fourth level there can still be smaller boxes, and they still use `--box-margin` for padding and spacing, but use `--content-margin` for border radii. There can also be content on this level.
+4. On the fourth level there is either content or smaller boxes. Smaller boxes still use `--box-margin` for padding and spacing, but `--content-margin` for border radii.
 
 The content level (inside buttons, chips, or other controls) uses spacing of `--content-margin`. Placing content directly into the layout space is not allowed, it needs to sit inside a box or panel.
 
-Popups sit in between layouts and containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii. Panels typically live in layout space (level 1), but have unique spacing rules (as outlined above).
+Popups take some properties from layouts and some from containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii. Panels typically live in layout space (level 1), but have unique spacing rules (as outlined above).
 
 ## Styling
 
-These are the base styling guidelines. Buliding on them is encouraged for creative designs.
+These are the base styling guidelines.
 
 ### Variables
 
@@ -62,7 +62,7 @@ These variables are used for colors.
 | --bright-green-color-soft| Indicators, subtle |
 | --bright-green-color-dark | Experience, perk backgrounds |
 | --background-color | Opaque background |
-| --dark-shadow-color | Font or drop shadows |
+| --dark-shadow-color | Text or drop shadows |
 
 These variabels are used for box shadows.
 
@@ -92,7 +92,7 @@ Boxes typically get this base styling:
 ```css
 .box {
     background-color: var(--box-color);
-    border-radius: var(--box-margin);
+    border-radius: var(--box-margin); /* --content-margin when inside another box */
     padding: var(--box-margin);
     gap: var(--box-margin); /* When applicable */
     box-shadow: var(--box-shadow);
@@ -100,7 +100,7 @@ Boxes typically get this base styling:
 }
 ```
 
-Their width should not grow to fit their container or the Popup if the content inside is shorter.
+Their width should not grow to fit their container or the Popup they are in if the content inside is shorter.
 
 #### Text inside boxes
 
@@ -121,9 +121,9 @@ Panels typically get this base styling:
 }
 ``` 
 
-Panels that house large buttons which are rounder than usual buttons should have a border radius of `--layout-margin` since we don't want uneven corners.
+Panels that house large buttons which are rounder than usual buttons should have a border radius of `--layout-margin` since we don't want uneven corners. Don't mix them, panels should stick to only large or only small buttons.
 
-When panels sit inside layouts with a strong background color set (e.g. `--overlay-color-dark`), their backgorund color should be `--box-color` instead of `--panel-color` to avoid layering two blue-ish tones (which will produce a color that looks too vibrant).
+When panels sit inside layouts with a strong background color (e.g. `--overlay-color-dark`), their backgorund color should be `--box-color` instead of `--panel-color` to avoid layering two blue-ish tones (which will produce a color that looks too vibrant).
 
 The gap or margin between related panels should be `--box-margin` if they use `--box-margin` for the border radii, otherwise `--layout-margin`.
 
@@ -158,51 +158,57 @@ Layouts typically get this base styling:
 
 ### Buttons
 
-Buttons should always be placed in a box or panel, not just on a blank page.
+Buttons should always be placed in a box or panel, not just on a blank page. Large buttons should **not** be put into a box.
 
-To create a button, apply the `standard-button` class. This will create a red primary button. To make it secondary, also apply `bright`.
+To create a button, apply the `standard-button` class. This will create a red primary button. To make it secondary, add `bright`.
 
-There is a tertiary button, and it's created by applying `dark`, but it's not used in combination with other button variants. Instead, it's strictly for repetitive actions to reduce mental load. For example, a sidebar with dozens of items, where each one has a small "X" button to remove it.
+There is a tertiary button, and it's created by applying `dark`, but it's not used in combination with other button variants. Instead, it's strictly for repetitive actions to reduce mental load since it is less eye-catching. For example, a sidebar with dozens of items, where each one has a small "X" button to delete it.
 
-Large buttons with small text inside (e.g. single short word) often look unnaturally short, bumping the padding by adding `wide` helps.
+Large buttons with small text inside (e.g. single short word) often look unnaturally short, bumping the padding by adding `wide` resolves this.
+
+### Icons in buttons
+
+Regular buttons typically have the icon placed on the left side. 
+
+Large buttons with text place the icon towards the right and use `space-between` to ensure that when multiple buttons are present, icons and text are perfectly aligned below each other, making it easier to scan through them at a glance.
 
 ### Icons
 
-Lucide, available via the package `@lucide/svelte`, should be used for icons.
+Lucide (`@lucide/svelte`) should be used for icons.
 
-At the default icon size (which always matches the font size), using `2.25` as the stroke width is suggested. Icons placed inside of buttons right next to text commonly look best at size `20`. Depending on the icon, raising the strokeWidth to `2.5` in that case can be adequate.
+At the default icon size (which inherits from the font size), using `2.25` as the stroke width is suggested. Icons placed inside of buttons right next to text commonly look best at size `20`.
 
-Since Lucide icons don't follow a strict universal strokeWidth and size, some might look better at different values, in which case it is okay to deviate from these defaults. For example, the `X` looks a bit thinner than many other icons.
+Since Lucide icons don't follow a strict universal strokeWidth and size, some might look better at different values, in which case it is okay to deviate from these defaults. For example, the `X` looks a bit thinner than most other icons.
 
-Icons should typically have the color white. They inherit color, but if they aren't placed inside an element, such as a paragraph, that sets one, it needs to be set explicitly.
+Icons should typically have the color white. They inherit color, but if they aren't placed inside an element that sets one (such as a paragraph), it needs to be set explicitly.
 
 The spacing between text and an icon inside content should be `--content-margin`.
 
 ### Scrollable areas
 
-Overfade, available via the package `overfade`, is a library used for scrollable areas. It applies a dynamic mask-image on the overflowing element's parent. When an element that contains overflowing text content is scrolled all the way to the top, the top of the text is not faded out, only the bottom is, and vice-versa.
+Overfade (`overfade`) is a library used for scrollable areas. It applies a dynamic mask-image on the overflowing element's parent.
 
-So, since the classes are dynamic by themselves, adding e.g. `of-top` only when the containing element is overflowing is incorrect.
+For example, when an element, that contains overflowing text content and uses `of-top` and `of-bottom`, is scrolled all the way to the top, the top of the text is not faded out, only the bottom is.
 
 To use it, add its classes:
 
-- `of-top`: Fade out towards the top
-- `of-bottom`: Fade out towards the bottom 
-- `of-left`: Fade out towards the left
-- `of-right`: Fade out towards the right
+- `of-top`: Fade out towards the top (for overflow-y)
+- `of-bottom`: Fade out towards the bottom (for overflow-y)
+- `of-left`: Fade out towards the left (for overflow-x)
+- `of-right`: Fade out towards the right (for overflow-x)
 - `of-length-x`: Multiply the length of the fade, defaults to 1 (optional, x = factor)
 
 These classes should not be applied directly on boxes or containers, since that would fade their background color. Instead, the scrollable content should go in a separate child div with overfade classes applied.
 
-Scroll containers should be spaced in a way that scrollable content is intentionally visibly cut off when scrolling is allowed to communicate that that scrolling is possible.
+Scrollable content should be intentionally, visibly cut off when scrolling is allowed to communicate the fact that scrolling is possible.
 
 ### Opacity values
 
-Opacity values used are typically `0.25`, `0.5`, `0.75` and `1`. Supportive text, such as the explanation for a feature, can be `0.75` or even `0.5`. Direct labels, e.g. for controls, should be full opacity.
+Opacity values used are typically `0.25`, `0.5`, `0.75` and `1`. Supportive text, such as the explanation for a feature, can be `0.75` or even `0.5`. Labels, e.g. for controls, should be full opacity.
 
 ### Images
 
-Apply `pointer-events: none` and `user-select: none` unless images need to be explicitly interactive (e.g. pins on the map).
+Apply `pointer-events: none` and `user-select: none` unless images need to be explicitly interactive.
 
 ### Animation and transition durations
 
@@ -244,7 +250,7 @@ The chip component is used for small pieces of information, such as a "New" or "
 - `children`: Content to render instead of text
 - `red`: Color variant
 - `italic`: Makes the text italic, typically combined with red
-- `mutedOpacity`: Makes the text muted, red variant typically sets this false
+- `mutedOpacity`: Makes the text muted, red variant typically disables this
 - `onclick`: Makes the chip clickable
 - `class`, `style`: Class passthrough
 
@@ -261,7 +267,7 @@ The collapsible component is used to contain information that should be tucked a
 
 ### ConfirmPopup
 
-The confirm popup component is used to request user confirmation or to display information. Mount it e.g. in the root layout. It takes the following props:
+The confirm popup component is used to request user confirmation or to display information. It needs to be mounted. It takes the following props:
 
 - `onconfirm`: Called when the user confirms
 
@@ -280,7 +286,7 @@ showConfirmPopup("Remove item?", "The item will be removed from your favorites."
 
 ### ErrorPopup
 
-The error popup component is used to inform the user about errors. Mount it e.g. in the root layout.
+The error popup component is used to inform the user about errors. It needs to be mounted.
 
 Error popups are shown via `errorPopup(title, description, errorCode, reload, hideDontShowAgainOption)`:
 
@@ -305,7 +311,7 @@ The info banner component is used for short pieces of information. It takes the 
 - `inPage`: Set to false when used in popups, containers etc.
 - `nowrap`: Keeps the text on one line
 - `center`: Centers the content
-- `transition`: Slides the banner in and out
+- `transition`: Toggles the slide transition
 - `class`, `style`: Class and style passthrough
 
 ### LoadingSpinner
@@ -316,7 +322,7 @@ The loading spinner component can be displayed while large content loads, such a
 
 ### Notification
 
-The notification component is used for short messages at the top of the screen, optionally with an action. Mount it e.g. in the root layout. It takes the following props:
+The notification component is used for short messages at the top of the screen, optionally with an action. It needs to be mounted. It takes the following props:
 
 - `top`: Distance from the top of the viewport, defaults to `--layout-margin`
 - `onaccept`: Called when the accept button is used
@@ -327,7 +333,7 @@ Notifications are shown via `showNotification(text, acceptAction, dismissAction,
 - `text`: The notification text, `%s` marks where the clickable text goes
 - `acceptAction`: Called on accept, also shows the accept button
 - `dismissAction`: Called on dismiss
-- `viewOnly`: Shows a view icon on the accept button
+- `viewOnly`: Displays a view icon in the accept button
 - `clickableText`: Clickable text inserted at `%s`, e.g. a player name
 - `textClickFunction`: Called when the clickable text is clicked
 
@@ -351,8 +357,8 @@ The room code input component is used for entering 6-character room codes. It ta
 The tabs component is great for choosing settings or views. It takes the following props:
 
 - `tabs`: Text strings or icons
-- `selected`: The selected tab content
-- `selectedIndex`: The selected tab index
+- `selected`: Selected tab's content
+- `selectedIndex`: Selected tab's index
 - `onchange`: Called with `(selected, selectedIndex)` when the selection changes
 - `disabled`: Disables all tabs
 - `children`: Children rendered inside tab
@@ -364,7 +370,7 @@ The ticker component is used for fine-grained numeric inputs. It takes the follo
 
 - `value`: Current value
 - `initialValue`: Start value
-- `step`: Step amount (how much value changes per step)
+- `step`: Step amount (how much the value changes per step)
 - `minimum`: Maximum value
 - `minimumText`, `maximumText`: Text displayed when the max/min is reached
 - `minimumValue`, `maximumValue`: Custom value to show when max/min is reached
@@ -376,7 +382,7 @@ The ticker component is used for fine-grained numeric inputs. It takes the follo
 
 The title separator component is used to separate content inside Popups or containers. It takes the following props:
 
-- `text`: The text shown before the line
+- `text`: The title text
 - `noMargin`: Removes the default top and bottom margin (`--layout-margin`)
 - `class`: Class passthrough
 
@@ -386,7 +392,7 @@ Attachments utilize Svelte's `{@attach...}` syntax.
 
 ### Tooltip
 
-Tooltips are mostly used for icon buttons that have no text, and persistent ones for tutorials. 
+Regular tooltips are used for icon buttons that have no text, and persistent tooltips for tutorials. 
 
 Usage example:
 
@@ -430,14 +436,16 @@ The components don't play sounds themselves. Instead, play them via their callba
 
 ## Scroll bars
 
-Typically, scroll bars should be hidden via `scrollbar-width: none`. There can be exceptions, such as textareas the user is working inside, where the lack of a scroll bar worsens the experience.
+Typically, scroll bars should be hidden via `scrollbar-width: none`. There can be exceptions, e.g. for text editors where a scroll bar brings utility.
 
 ## Text formatting guidelines
 
-- Body text and headings should be written as plain sentences, also known as sentence case, as opposed to title case (for example, “Game overview” rather than “Game Overview”). The only exception that OpenGuessr makes is for content that needs a clear title or branding such as modes (e.g. Country Guessr), maps (e.g. Capital Cities), competitions, and tournaments.
+- Body text and headings should be written as plain sentences (sentence case) as opposed to title case (for example, “Game overview” rather than “Game Overview”). The only exception that OpenGuessr makes is for content that needs a clear title or branding such as modes (e.g. Country Guessr), maps (e.g. Capital Cities), competitions, and tournaments.
 - Using a colon ":" in or for UI labels is not recommended.
 - Headings should not end in a period.
 
 ## Flexibility
 
-This design system is highly expandable. Instead of using fixed components for everything, most elements are built using the provided CSS variables. Game UIs should feel handcrafted instead of generic, there are many scenarios where custom controls feel more intuitive than any preexisting component would. So, don't use generic buttons for a fancy map selection screen, or don't use a slider for a health bar – creativity is what makes games feel special.
+This design system is highly expandable. Instead of using fixed components for everything, most elements are built using the provided CSS variables. 
+
+Game UIs should feel handcrafted instead of generic, there are many scenarios where custom controls feel more intuitive than any preexisting component would. So, don't use generic buttons for a fancy map selection screen, or don't use a slider for a health bar – creativity is what makes games feel special.
