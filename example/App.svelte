@@ -15,7 +15,7 @@
 		tooltip,
 		showNotification,
 		showConfirmPopup,
-		errorPopup,
+		showErrorPopup,
 	} from "../index.js";
 	import ExamplePortal from "./ExamplePortal.svelte";
 	import { ArrowRight, Info, SquarePen, Share2, Trash } from "@lucide/svelte";
@@ -275,12 +275,12 @@
 			<button
 				class="standard-button bright"
 				onclick={() =>
-					errorPopup("Failed to load map", "An error occured loading the map.", "Error: 404 - Map not found")}
+					showErrorPopup("Failed to load map", "An error occurred loading the map.", "Error: 404 - Map not found")}
 				>With error code</button
 			>
 			<button
 				class="standard-button bright"
-				onclick={() => errorPopup("Connection lost", "You were disconnected from the server.", undefined, false, true)}
+				onclick={() => showErrorPopup("Connection lost", "You were disconnected from the server.", undefined, false, true)}
 				>Text only</button
 			>
 		</div>

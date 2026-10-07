@@ -1,6 +1,6 @@
 {
 	"name": "openguessr-ui",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite example"
@@ -28,7 +28,6 @@
 		"./variables.css": "./variables.css",
 		"./base.css": "./base.css",
 		"./classes.css": "./classes.css",
-		"./sound-effects/*": "./sound-effects/*",
 		"./fonts/*": "./fonts/*"
 	},
 	"peerDependencies": {

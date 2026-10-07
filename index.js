@@ -13,4 +13,15 @@ export { default as TitleSeparator } from "./components/TitleSeparator.svelte";
 export { tooltip } from "./tooltip.svelte.js";
 export { showNotification } from "./notifications.svelte.js";
 export { showConfirmPopup } from "./confirmPopup.svelte.js";
-export { errorPopup } from "./errorPopup.svelte.js";
+export { showErrorPopup } from "./errorPopup.svelte.js";
+
+// Sounds
+import basic_button from "./sound-effects/basic_button.ogg";
+import juicy_button from "./sound-effects/juicy_button.ogg";
+import start_button from "./sound-effects/start_button.ogg";
+import toggle_button from "./sound-effects/toggle_button.ogg";
+import change_value from "./sound-effects/change_value.ogg";
+import item_select from "./sound-effects/item_select.ogg";
+import item_locked from "./sound-effects/item_locked.ogg";
+
+export const sounds = { basic_button, juicy_button, start_button, toggle_button, change_value, item_select, item_locked };

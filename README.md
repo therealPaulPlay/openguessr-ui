@@ -17,7 +17,7 @@ These core concepts define how UI should be structured.
 
 - **Panels:** Panels are used for floating UI. They typically include controls rather than loads of text or images, perfect for HUDs.
 
-- **Containers:** Containers contain boxes. The popup acts as a layout/container hybird that also contains boxes.
+- **Containers:** Containers contain boxes. The popup acts as a layout/container hybrid that also contains boxes.
 
 - **Layouts:** Layouts are typically full pages that containers or panels sit in.
 
@@ -72,7 +72,7 @@ These variables are used for colors:
 > [!TIP]
 > There should be at most one `--brand-color` element visible at a time (the primary action). Green colors should not be used for success, use bright styling instead (e.g. `rgba(255, 255, 255, 0.2)`).
 
-These variabels are used for box shadows:
+These variables are used for box shadows:
 
 | Variable | Used for |
 | -------- | ------- |
@@ -82,7 +82,7 @@ These variabels are used for box shadows:
 | --box-shadow-bottom | Boxes that fade out towards the top |
 | --box-shadow | Boxes |
 | --bulb-shadow | Pills, chips, badges |
-| --panel-shadow | Floating elements (containers, panels..) |
+| --panel-shadow | Floating elements (containers, panels etc.) |
 
 These variables are used for blur:
 
@@ -108,11 +108,11 @@ Boxes typically use this base styling:
 }
 ```
 
-Their width shouldn't grow to fit the container or Popup they are in.
+Their width shouldn't grow to fit the container or popup they are in.
 
 #### Text inside boxes
 
-Since boxes have rather tight padding and text naturally adds top and bottom spacing through the line-height, applying `padding-inline: var(--content-margin)` to text is recommended. If the entire box just contains text, raising the boxes' inline padding to `--layout-margin` has the same effect.
+Since boxes have rather tight padding and text naturally adds top and bottom spacing through the line-height, applying `padding-inline: var(--content-margin)` to text is recommended. If the entire box just contains text, raising the box's inline padding to `--layout-margin` has the same effect.
 
 ### Panels
 
@@ -131,7 +131,7 @@ Panels typically use this base styling:
 
 Panels that house large buttons which are rounder than usual buttons should have a border radius of `--layout-margin` to avoid uneven corners. Don't mix them, panels should stick to only large or only small buttons.
 
-When panels sit inside layouts with a strong background color (e.g. `--overlay-color-dark`), their backgorund color should be `--box-color` instead of `--panel-color` to avoid layering two blue-ish tones (which will produce a color that looks too vibrant).
+When panels sit inside layouts with a strong background color (e.g. `--overlay-color-dark`), their background color should be `--box-color` instead of `--panel-color` to avoid layering two blue-ish tones (which will produce a color that looks too vibrant).
 
 The gap or margin between related panels should be `--box-margin` if they use `--box-margin` for the border radii, otherwise `--layout-margin`.
 
@@ -197,7 +197,7 @@ The spacing between text and an icon inside content should be `--content-margin`
 
 ### Scrollable areas
 
-Overfade (`overfade`) is a library used for scrollable areas. It applies a dynamic mask-image on the overflowing element's parent.
+Overfade (`overfade`) is a library used for scrollable areas. It applies a dynamic mask-image to the scroll container, the element that holds the overflowing content.
 
 For example, when an element, that contains overflowing text content and uses `of-top` and `of-bottom`, is scrolled all the way to the top, the top of the text is not faded out, only the bottom is.
 
@@ -212,6 +212,8 @@ To use it, add its classes:
 These classes should not be applied directly on boxes or containers, since that would fade their background color. Instead, the scrollable content should go in a separate child div with overfade classes applied.
 
 Scrollable content should be intentionally, visibly cut off when scrolling is allowed to communicate the fact that scrolling is possible.
+
+Typically, scroll bars should be hidden via `scrollbar-width: none`. There can be exceptions, e.g. for text editors where a scroll bar brings utility.
 
 ### Opacity values
 
@@ -240,7 +242,7 @@ The popup component is used for dialogs. It takes the following props:
 - `open`: Whether the popup is open
 - `slim`: Reduces the max width
 - `verySlim`: Reduces the max width further
-- `frameless`: Reduces the padding, e.g. for iFrames
+- `frameless`: Reduces the padding, e.g. for iframes
 - `onuserclose`: Called when the user closes the popup
 
 A common design pattern is to include a heading at the top of a popup. For this, the built-in `popup-title` class can be used:
@@ -299,7 +301,7 @@ showConfirmPopup("Remove item?", "The item will be removed from your favorites."
 
 The error popup component is used to inform the user about errors. It needs to be mounted.
 
-Error popups are shown via `errorPopup(title, description, errorCode, reload, hideDontShowAgainOption)`:
+Error popups are shown via `showErrorPopup(title, description, errorCode, reload, hideDontShowAgainOption)`:
 
 - `title`: The popup title
 - `description`: The description
@@ -310,7 +312,7 @@ Error popups are shown via `errorPopup(title, description, errorCode, reload, hi
 Usage example:
 
 ```js
-errorPopup("Failed to load map", "An error occured loading this map.", "Code 404: Map not found");
+showErrorPopup("Failed to load map", "An error occurred loading this map.", "Code 404: Map not found");
 ```
 
 ### InfoBanner
@@ -361,7 +363,7 @@ The room code input component is used for entering 6-character room codes. It ta
 
 - `segments`: The entered characters
 - `inPage`: Set to false when used in panels, boxes etc.
-- `onsubmit`: Called with the code when the enter or the submit button is pressed
+- `onsubmit`: Called with the code when Enter or the submit button is pressed
 
 ### Tabs
 
@@ -382,16 +384,17 @@ The ticker component is used for fine-grained numeric inputs. It takes the follo
 - `value`: Current value
 - `initialValue`: Start value
 - `step`: Step amount (how much the value changes per step)
-- `minimum`: Maximum value
-- `minimumText`, `maximumText`: Text displayed when the max/min is reached
-- `minimumValue`, `maximumValue`: Custom value to show when max/min is reached
+- `minimum`: Minimum value
+- `maximum`: Maximum value
+- `minimumText`, `maximumText`: Text displayed when the min/max is reached
+- `minimumValue`, `maximumValue`: Custom value to bind when the min/max is reached
 - `note`: Unit of the value
 - `minValueWidth`: Minimum width of value field to prevent the width from jumping
 - `onchange`: Called when the value changes
 
 ### TitleSeparator
 
-The title separator component is used to separate content inside Popups or containers. It takes the following props:
+The title separator component is used to separate content inside popups or containers. It takes the following props:
 
 - `text`: The title text
 - `noMargin`: Removes the default top and bottom margin (`--layout-margin`)
@@ -425,10 +428,12 @@ Options:
 
 ## Sound effects
 
-UI sound effects are available as `.ogg` files and can be played with any audio library:
+UI sound effects are available as `.ogg` files and can be played with any audio library. The `sounds` export maps each name to its file URL:
 
 ```js
-import basicButtonSound from "openguessr-ui/sound-effects/basic_button.ogg";
+import { sounds } from "openguessr-ui";
+
+new Audio(sounds.basic_button).play();
 ```
 
 | Sound | Purpose |
@@ -445,11 +450,9 @@ The components don't play sounds themselves. Instead, they should be played via 
 
 - Collapsible `ontoggle`: `toggle_button`
 - Ticker `onchange`: `change_value`
+- Tabs `onchange`: `basic_button`
 - Notification `onaccept`, `ondismiss`: `basic_button`
-
-## Scroll bars
-
-Typically, scroll bars should be hidden via `scrollbar-width: none`. There can be exceptions, e.g. for text editors where a scroll bar brings utility.
+- ConfirmPopup `onconfirm`: `basic_button`
 
 ## Text formatting guidelines
 
