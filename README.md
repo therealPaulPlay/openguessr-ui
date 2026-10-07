@@ -362,3 +362,7 @@ Typically, scroll bars should be hidden via `scrollbar-width: none`. There can b
 - Body text and headings should be written as plain sentences, also known as sentence case, as opposed to title case (for example, “Game overview” rather than “Game Overview”). The only exception that OpenGuessr makes is for content that needs a clear title or branding such as modes (e.g. Country Guessr), maps (e.g. Capital Cities), competitions, and tournaments.
 - Using a colon ":" in or for UI labels is not recommended.
 - Headings should not end in a period.
+
+## Flexibility
+
+This design system is highly expandable. Instead of using fixed components for everything, most elements are built using the provided CSS variables. Game UIs should feel handcrafted instead of generic, there are many scenarios where custom controls or designs feel more intuitive than any preexisting component would. So, don't use generic buttons for a fancy map selection screen, or don't use a slider for a health bar – creativity is what makes games feel special.
