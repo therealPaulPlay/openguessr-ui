@@ -208,6 +208,10 @@ Apply `pointer-events: none` and `user-select: none` unless images need to be ex
 
 Use `100ms`, `150ms`, `250ms`, `500ms` or `1000ms`.
 
+### Hover effects
+
+Elements with hover styling should get darker when hovered, never brighter. For mobile, many `:hover` effects should also be applied when `:active`.
+
 ## Components
 
 These built-in components are useful for building common UI flows.
