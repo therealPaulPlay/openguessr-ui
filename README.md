@@ -33,7 +33,7 @@ These core concepts define how UI should be structured.
 
 The content level (inside buttons, chips, tabs, or other controls) uses spacing of `--content-margin`. Placing content directly into layouts or containers is not allowed, it needs to sit inside a box or panel.
 
-Popups take some properties from layouts and some from containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii. Panels typically live in layout space (level 1), but have unique spacing rules (as outlined above).
+Popups take some properties from layouts and some from containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii.
 
 ## Styling
 
