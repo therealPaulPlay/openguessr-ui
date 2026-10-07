@@ -70,7 +70,7 @@ These variables are used for colors:
 | --dark-shadow-color | Text or drop shadows |
 
 > [!TIP]
-> There should be at most one `--brand-color` element visible at a time. Usually, the primary action.
+> There should be at most one `--brand-color` element visible at a time (the primary action). Green colors should **not** be used for success, use bright styling instead (e.g. `rgba(255, 255, 255, 0.2)`).
 
 These variabels are used for box shadows:
 
