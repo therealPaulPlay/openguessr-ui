@@ -8,11 +8,11 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-/* This UI library is for games, not sites, double-tap to zoom or drag down to refresh are not wanted */
 html {
+    /* This UI library is for games, not sites, double-tap to zoom or drag down to refresh are not wanted */
     overscroll-behavior: none;
     touch-action: none;
 }
