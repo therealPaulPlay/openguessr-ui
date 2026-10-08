@@ -113,11 +113,13 @@
 		max-height: min(900px, calc(100dvh - var(--layout-margin) * 2 - 50px));
 		width: 100%;
 		scrollbar-width: none;
+		border-radius: var(--box-margin);
 	}
 
 	.content-frameless {
 		max-height: calc(100dvh - var(--layout-margin) * 2 - var(--box-margin) - 10px);
 		margin-bottom: -4px;
+		border-radius: 0;
 	}
 
 	.ui-window {
