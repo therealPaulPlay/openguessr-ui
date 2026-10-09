@@ -400,6 +400,10 @@ The title separator component is used to separate content inside popups or conta
 - `noMargin`: Removes the default top and bottom margin (`--layout-margin`)
 - `class`: Class passthrough
 
+### ExperimentSign
+
+The experiment sign is a sign that should be placed on the main page of an experimental OpenGuessr project. For the "Learn more" to work, the ConfirmPopup has to be mounted.
+
 ## Attachments
 
 Attachments utilize Svelte's `{@attach...}` syntax.
@@ -445,6 +449,8 @@ new Audio(sounds.basic_button).play();
 | change_value | Changing a value (e.g. through a ticker) |
 | item_select | Selecting an item (e.g. a pin, badge, or flag) |
 | item_locked | Trying to select a locked item |
+
+No sound should be played for lightweight actions such as clicks on links or tiny "X" buttons (like the one used in the persistent tooltip).
 
 The components don't play sounds themselves. Instead, they should be played via callbacks:
 

@@ -12,6 +12,7 @@
 		Tabs,
 		Ticker,
 		TitleSeparator,
+		ExperimentSign,
 		tooltip,
 		showNotification,
 		showConfirmPopup,
@@ -280,7 +281,8 @@
 			>
 			<button
 				class="standard-button bright"
-				onclick={() => showErrorPopup("Connection lost", "You were disconnected from the server.", undefined, false, true)}
+				onclick={() =>
+					showErrorPopup("Connection lost", "You were disconnected from the server.", undefined, false, true)}
 				>Text only</button
 			>
 		</div>
@@ -299,6 +301,10 @@
 
 	<ExamplePortal title="14. Loading spinner">
 		<LoadingSpinner />
+	</ExamplePortal>
+
+	<ExamplePortal title="15. Experiment sign">
+		<ExperimentSign />
 	</ExamplePortal>
 </main>
 

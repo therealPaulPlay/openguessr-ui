@@ -1,6 +1,6 @@
 {
 	"name": "openguessr-ui",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"type": "module",
 	"scripts": {
 		"dev": "vite example"
@@ -14,6 +14,7 @@
 		"components",
 		"fonts",
 		"vector-graphics",
+		"images",
 		"sound-effects",
 		"variables.css",
 		"base.css",
