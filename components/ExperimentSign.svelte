@@ -1,9 +1,11 @@
 <script>
 	import { showConfirmPopup } from "../confirmPopup.svelte.js";
 	import experimentStars from "../images/experiment_stars.png";
+
+	let { class: classes } = $props();
 </script>
 
-<div class="sign">
+<div class="sign {classes}">
 	<img alt="stars" src={experimentStars} class="stars" />
 	<h3>Experiment</h3>
 	<p class="subtitle">
@@ -28,7 +30,7 @@
 		box-shadow: var(--panel-shadow);
 		border-radius: var(--layout-margin);
 		padding: var(--layout-margin);
-		position: relative;
+		contain: layout;
 		display: flex;
 		flex-direction: column;
 		gap: var(--content-margin);

@@ -402,7 +402,11 @@ The title separator component is used to separate content inside popups or conta
 
 ### ExperimentSign
 
-The experiment sign is a sign that should be placed on the main page of an experimental OpenGuessr project. For the "Learn more" to work, the ConfirmPopup has to be mounted.
+The experiment sign is a sign that should be placed on the main page of an experimental OpenGuessr project. For the "Learn more" to work, the ConfirmPopup has to be mounted. The sign takes the following props:
+
+- `class`: Class passthrough
+
+It's typically placed in the lower left-hand corner with spacing of `--layout-margin` towards the edges.
 
 ## Attachments
 
@@ -450,7 +454,7 @@ new Audio(sounds.basic_button).play();
 | item_select | Selecting an item (e.g. a pin, badge, or flag) |
 | item_locked | Trying to select a locked item |
 
-No sound should be played for lightweight actions such as clicks on links or tiny "X" buttons (like the one used in the persistent tooltip).
+No sound should be played for lightweight actions such as clicks on links or tiny "X" buttons that lack standard button styling (like the one used in the persistent tooltip).
 
 The components don't play sounds themselves. Instead, they should be played via callbacks:
 
