@@ -8,7 +8,7 @@
 	import { backOut } from "svelte/easing";
 	import { fade, scale } from "svelte/transition";
 
-	let { children, frameless, slim, verySlim, open = $bindable(false), onuserclose } = $props();
+	let { children, frameless, slim, verySlim, ultraSlim, open = $bindable(false), onuserclose } = $props();
 
 	let zIndex = $state(0);
 
@@ -65,7 +65,7 @@
 			class="ui-window"
 			transition:scale={{ easing: backOut, duration: 250, start: 0.9 }}
 			class:frame-less={frameless}
-			style:max-width={verySlim ? "600px" : slim ? "750px" : "850px"}
+			style:max-width={ultraSlim ? "450px" : verySlim ? "600px" : slim ? "750px" : "850px"}
 		>
 			<button class="close-popup-button standard-button bright" aria-label="close" onclick={close}
 				><X strokeWidth={2.25} /></button

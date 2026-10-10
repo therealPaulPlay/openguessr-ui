@@ -242,6 +242,7 @@ The popup component is used for dialogs. It takes the following props:
 - `open`: Whether the popup is open
 - `slim`: Reduces the max width
 - `verySlim`: Reduces the max width further
+- `ultraSlim`: Reduces the max width even further
 - `frameless`: Reduces the padding, e.g. for iframes
 - `onuserclose`: Called when the user closes the popup
 

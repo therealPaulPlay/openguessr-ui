@@ -17,7 +17,7 @@
 			tabindex="0"
 			onclick={() =>
 				showConfirmPopup(
-					"Experiments",
+					"Experiment",
 					"Experiments are new ideas brought to life with help from artificial intelligence and built upon the robust foundations of OpenGuessr.",
 				)}>Learn more</span
 		>.
