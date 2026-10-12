@@ -23,7 +23,7 @@ These core concepts define how UI should be structured.
 
 ### Hierarchy
 
-1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements, the padding, and the border radii of children. For separating unrelated elements, `--layout-spacer` is used.
+1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements, the padding, and the border radii of children. For separating unrelated elements, `--layout-spacer` is used. Panels with a `--box-margin` border radius are an exception, see [Panels](#panels).
 
 2. The second level is containers, where the spacing and padding is `--box-margin`, and the border radii of children are as well.
 
@@ -133,7 +133,10 @@ Panels that house large buttons which are rounder than usual buttons should have
 
 When panels sit inside layouts with a strong background color (e.g. `--overlay-color-dark`), their background color should be `--box-color` instead of `--panel-color` to avoid layering two blue-ish tones (which will produce a color that looks too vibrant).
 
-The gap or margin between related panels should be `--box-margin` if they use `--box-margin` for the border radii, otherwise `--layout-margin`.
+The gap between related panels and their spacing to the viewport edges should match their border radius. That means using `--box-margin` for panels with a `--box-margin` border radius, and `--layout-margin` for panels with a `--layout-margin` border radius.
+
+> [!IMPORTANT]
+> This applies even though panels sit in layout space, where `--layout-margin` would otherwise be the default. This exception exists because panels are the only core element that can sit in layout space with a border radius below `--layout-margin`.
 
 ### Containers
 
