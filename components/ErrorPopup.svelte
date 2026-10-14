@@ -29,8 +29,8 @@
 	.error-code {
 		opacity: 70%;
 		padding: var(--box-margin);
-		padding-inline: 20px;
-		border-radius: 7px;
+		padding-inline: var(--layout-margin);
+		border-radius: var(--box-margin);
 		font-size: 14px;
 		line-height: 22px;
 		font-family: monospace;

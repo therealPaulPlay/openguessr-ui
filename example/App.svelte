@@ -291,7 +291,7 @@
 	<ExamplePortal title="13. Room code input">
 		<div class="layout layout-slim layout-slim-with-padding" style:flex-direction="column">
 			<RoomCodeInput />
-			<div class="container" style:margin-top="var(--layout-margin)">
+			<div class="box" style:margin-top="var(--layout-margin)">
 				<div style:display="flex" style:height="40px" style:width="250px">
 					<RoomCodeInput inPage={false} />
 				</div>
@@ -325,7 +325,6 @@
 		border-radius: var(--box-margin);
 		padding: var(--box-margin);
 		background-color: var(--box-color);
-		border-radius: var(--box-margin);
 		box-shadow: var(--box-shadow);
 	}
 

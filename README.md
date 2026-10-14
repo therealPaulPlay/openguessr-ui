@@ -23,17 +23,17 @@ These core concepts define how UI should be structured.
 
 ### Hierarchy
 
-1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements, the padding, and the border radii of children. For separating unrelated elements, `--layout-spacer` is used. Panels with a `--box-margin` border radius are an exception, see [Panels](#panels).
+1. Every element starts in layout space (level 1), where `--layout-margin` defines the spacing between grouped elements, and `--layout-spacer` the spacing between unrelated ones. Panels with a `--box-margin` border radius are an exception, see [Panels](#panels).
 
-2. The second level is containers, where the spacing and padding is `--box-margin`, and the border radii of children are as well.
+2. The second level is containers, where the spacing and padding is `--box-margin`. Containers have a border radius of `--layout-margin`.
 
-3. The third level is boxes, where the spacing and padding is still `--box-margin`, but the border radii of children are `--content-margin`.
+3. The third level is boxes, where the spacing and padding is also `--box-margin`, but they have a border radius of `--box-margin`.
 
-4. On the fourth level there is either content or smaller boxes. Smaller boxes still use `--box-margin` for padding and spacing, but `--content-margin` for border radii.
+4. On the fourth level there is either content or smaller boxes. Smaller boxes still use `--box-margin` for padding and spacing. Both content and smaller boxes use `--content-margin` for border radii.
 
 The content level (inside buttons, chips, tabs, or other controls) uses spacing of `--content-margin`. Placing content directly into layouts or containers is not allowed, it needs to sit inside a box or panel.
 
-Popups take some properties from layouts and some from containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3) with `--box-margin` for border radii.
+Popups take some properties from layouts and some from containers. They use `--layout-margin` for spacing, but content inside them is boxes (level 3).
 
 ## Styling
 

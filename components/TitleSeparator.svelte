@@ -12,7 +12,7 @@
 		height: 2px;
 		background-color: var(--line-color);
 		flex-grow: 1;
-		border-radius: var(--box-margin);
+		border-radius: var(--content-margin);
 		margin-top: var(--content-margin);
 	}
 
