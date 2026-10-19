@@ -242,13 +242,6 @@ select {
     appearance: none;
 }
 
-/* Search */
-search {
-    display: flex;
-    justify-content: center;
-    gap: var(--box-margin);
-}
-
 /* View transition animations */
 :root::view-transition-new(root),
 :root::view-transition-old(root) {
