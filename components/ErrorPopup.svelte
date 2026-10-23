@@ -10,7 +10,9 @@
 		if (errorPopupState.reload) window.location.reload();
 	}}
 >
-	<h1 class="popup-title">{errorPopupState.title}</h1>
+	<div class="popup-title">
+		<h1>{errorPopupState.title}</h1>
+	</div>
 	<div>
 		<p class="slight-bottom-margin">{errorPopupState.description}</p>
 		{#if errorPopupState.errorCode}
@@ -36,6 +38,7 @@
 		font-family: monospace;
 		margin-top: var(--box-margin);
 		box-shadow: var(--box-shadow);
+		user-select: text;
 	}
 
 	#error-popup-disable {
