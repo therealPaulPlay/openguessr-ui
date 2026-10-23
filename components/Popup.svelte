@@ -67,7 +67,7 @@
 			class:frame-less={frameless}
 			style:max-width={ultraSlim ? "450px" : verySlim ? "600px" : slim ? "750px" : "850px"}
 		>
-			<button class="close-popup-button standard-button bright" aria-label="close" onclick={close}
+			<button class="close-popup-button standard-button" aria-label="close" onclick={close}
 				><X strokeWidth={2.25} /></button
 			>
 			<div class="content of-top of-bottom" class:content-frameless={frameless}>
@@ -110,21 +110,27 @@
 		position: relative;
 		overflow-y: auto;
 		overflow-x: hidden;
-		max-height: min(900px, calc(100dvh - var(--layout-margin) * 2 - 50px));
+		max-height: min(
+			900px,
+			calc(
+				100dvh - var(--layout-margin) * 2 - var(--layout-spacer) - env(safe-area-inset-top) -
+					env(safe-area-inset-bottom)
+			)
+		);
 		width: 100%;
 		scrollbar-width: none;
 		border-radius: var(--box-margin);
 	}
 
 	.content-frameless {
-		max-height: calc(100dvh - var(--layout-margin) * 2 - var(--box-margin) - 10px);
+		max-height: calc(100dvh - var(--layout-spacer) - env(safe-area-inset-top) - env(safe-area-inset-bottom));
 		margin-bottom: -4px;
 		border-radius: 0;
 	}
 
 	.ui-window {
 		width: calc(100% - var(--layout-margin) * 2);
-		padding: calc(var(--layout-margin) + 5px);
+		padding: calc(var(--layout-margin) + var(--content-margin));
 		border-radius: calc(var(--layout-margin) + var(--box-margin));
 		text-align: left;
 		position: relative;

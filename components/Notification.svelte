@@ -103,6 +103,7 @@
 		position: fixed;
 		left: var(--box-margin);
 		right: var(--box-margin);
+		margin-top: env(safe-area-inset-top);
 		display: flex;
 		justify-content: center;
 		pointer-events: none;
