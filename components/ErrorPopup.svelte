@@ -39,6 +39,7 @@
 		margin-top: var(--box-margin);
 		box-shadow: var(--box-shadow);
 		user-select: text;
+		-webkit-user-select: text;
 	}
 
 	#error-popup-disable {
