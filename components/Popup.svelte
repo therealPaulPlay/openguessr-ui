@@ -311,7 +311,6 @@
 
 	.content-frameless {
 		max-height: calc(100dvh - var(--layout-spacer) - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-		margin-bottom: -4px;
 		border-radius: 0;
 	}
 

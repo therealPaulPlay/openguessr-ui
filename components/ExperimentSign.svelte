@@ -1,5 +1,5 @@
 <script>
-	import { showConfirmPopup } from "../utils/confirmPopup.svelte.js";
+	import { showConfirmPopup } from "../utils/confirm-popup.svelte.js";
 	import experimentStars from "../images/experiment_stars.png";
 
 	let { class: classes } = $props();

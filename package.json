@@ -7,10 +7,7 @@
 	},
 	"files": [
 		"index.js",
-		"tooltip.svelte.js",
-		"notifications.svelte.js",
-		"confirmPopup.svelte.js",
-		"errorPopup.svelte.js",
+		"utils",
 		"components",
 		"fonts",
 		"vector-graphics",

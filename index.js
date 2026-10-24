@@ -13,8 +13,8 @@ export { default as TitleSeparator } from "./components/TitleSeparator.svelte";
 export { default as ExperimentSign } from "./components/ExperimentSign.svelte";
 export { tooltip } from "./utils/tooltip.svelte.js";
 export { showNotification } from "./utils/notifications.svelte.js";
-export { showConfirmPopup } from "./utils/confirmPopup.svelte.js";
-export { showErrorPopup } from "./utils/errorPopup.svelte.js";
+export { showConfirmPopup } from "./utils/confirm-popup.svelte.js";
+export { showErrorPopup } from "./utils/error-popup.svelte.js";
 
 // Sounds
 import basic_button from "./sound-effects/basic_button.ogg";
