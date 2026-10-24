@@ -14,7 +14,8 @@
 html {
     /* This UI library is for games, not sites, double-tap to zoom or drag down to refresh are not wanted */
     overscroll-behavior: none;
-    touch-action: none;
+    /* Block double-tap or pinch to zoom */
+    touch-action: pan-x pan-y;
 }
 
 html * {
@@ -23,8 +24,8 @@ html * {
 
 body {
     font-family: Barlow, sans-serif;
-    /* Disable touch action again since body could be a scroll container */
-    touch-action: none;
+    /* Set touch action again since body could be a scroll container */
+    touch-action: pan-x pan-y;
     background-color: var(--background-color);
 }
 

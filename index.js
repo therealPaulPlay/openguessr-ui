@@ -11,10 +11,10 @@ export { default as Tabs } from "./components/Tabs.svelte";
 export { default as Ticker } from "./components/Ticker.svelte";
 export { default as TitleSeparator } from "./components/TitleSeparator.svelte";
 export { default as ExperimentSign } from "./components/ExperimentSign.svelte";
-export { tooltip } from "./tooltip.svelte.js";
-export { showNotification } from "./notifications.svelte.js";
-export { showConfirmPopup } from "./confirmPopup.svelte.js";
-export { showErrorPopup } from "./errorPopup.svelte.js";
+export { tooltip } from "./utils/tooltip.svelte.js";
+export { showNotification } from "./utils/notifications.svelte.js";
+export { showConfirmPopup } from "./utils/confirmPopup.svelte.js";
+export { showErrorPopup } from "./utils/errorPopup.svelte.js";
 
 // Sounds
 import basic_button from "./sound-effects/basic_button.ogg";

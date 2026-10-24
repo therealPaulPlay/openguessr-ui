@@ -1,6 +1,6 @@
 <script>
 	import Popup from "./Popup.svelte";
-	import { confirmPopup } from "../confirmPopup.svelte.js";
+	import { confirmPopup } from "../utils/confirmPopup.svelte.js";
 
 	let { onconfirm } = $props();
 

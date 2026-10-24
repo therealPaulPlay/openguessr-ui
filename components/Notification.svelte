@@ -1,5 +1,5 @@
 <script>
-	import { notification, hideNotification } from "../notifications.svelte.js";
+	import { notification, hideNotification } from "../utils/notifications.svelte.js";
 	import { Check, SquareArrowOutUpRight, X } from "@lucide/svelte";
 	import { fly } from "svelte/transition";
 

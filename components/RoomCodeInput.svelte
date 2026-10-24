@@ -1,6 +1,6 @@
 <script>
 	import { ArrowRight } from "@lucide/svelte";
-	import { tooltip } from "../tooltip.svelte.js";
+	import { tooltip } from "../utils/tooltip.svelte.js";
 
 	let { segments = $bindable(["", "", "", "", "", ""]), inPage = true, onsubmit } = $props(); // 6 segments for XXX-XXX
 

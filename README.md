@@ -249,6 +249,8 @@ The popup component is used for dialogs. It takes the following props:
 - `frameless`: Reduces the padding, e.g. for iframes
 - `onuserclose`: Called when the user closes the popup
 
+On mobile devices (portrait orientation, and narrow in terms of width), the popup transforms into a drawer.
+
 A common design pattern is to include a heading at the top of a popup. For this, the built-in `popup-title` class can be used:
 
 ```html

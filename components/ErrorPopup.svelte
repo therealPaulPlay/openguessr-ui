@@ -1,5 +1,5 @@
 <script>
-	import { errorPopupState } from "../errorPopup.svelte.js";
+	import { errorPopupState } from "../utils/errorPopup.svelte.js";
 	import Popup from "./Popup.svelte";
 </script>
 
