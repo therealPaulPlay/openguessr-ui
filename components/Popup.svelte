@@ -17,48 +17,43 @@
 	let zIndex = $state(0);
 
 	// Transitions ------------------------------------------------------------------------------
-	const DRAWER_EASE = [0.32, 0.72, 0, 1];
+	const DRAWER_TIMING = { duration: 500, easing: cubicBezier(0.32, 0.72, 0, 1) };
 	const DRAWER_HIDDEN_OVERSHOOT = 50; // Added negative closed y-pos offset to move the panel shadow off-screen (100px blur - 50px --layout-spacer)
 	const popupToDrawer = new MediaQuery("(orientation: portrait) and (max-width: 500px)");
 
 	const popupHolderTransition = (node) => (popupToDrawer.current ? { duration: 0 } : fade(node, { duration: 100 }));
 
-	function drawerOverlayTransitionTapClose(_node, _params, { duration }) {
-		return {
-			duration,
-			easing: cubicBezier(...DRAWER_EASE),
-			// Animates color and blur strength
-			css: (progress) =>
-				`background-color: color-mix(in srgb, var(--overlay-color) ${progress * 100}%, transparent); backdrop-filter: blur(calc(var(--weak-blur) * ${progress}));`,
-		};
-	}
-
-	function windowTransitionDrawer(node) {
-		const closedOffset = node.offsetHeight + DRAWER_HIDDEN_OVERSHOOT;
-		return {
-			duration: 500,
-			easing: cubicBezier(...DRAWER_EASE),
-			css: (t) => `transform: translate3d(0, ${(1 - t) * closedOffset}px, 0)`,
-		};
-	}
-
-	// Whether the drawer was dragged closed or closed via X / ESC / Empty click
-	let draggedClosed = $state(false);
+	// Replaced when dragged closed, so the close continues the swipe's speed
+	let closeTiming = DRAWER_TIMING;
 
 	function windowTransition(node, _params, { direction }) {
 		if (!popupToDrawer.current) return scale(node, { easing: backOut, duration: 250, start: 0.9 });
-		else {
-			// Reset draggedClose on fresh open
-			if (direction == "in") draggedClosed = false;
-			else if (draggedClosed) return { duration: 0 }; // Already closed, unmount immediately without transition
-			return windowTransitionDrawer(node); // Regular drawer transition
+
+		if (direction == "in") {
+			closeTiming = DRAWER_TIMING;
+			drawerVerticalOffset = node.offsetHeight + DRAWER_HIDDEN_OVERSHOOT;
+			animateDrawerOpen(); // Opening is animated by this function, so a drag can take over at any point
+			return { duration: 0 };
+		} else {
+			// Close from wherever the drawer currently is
+			cancelAnimationFrame(openAnimationFrame);
+			const start = drawerVerticalOffset;
+			return {
+				...closeTiming,
+				css: (t) => `transform: translate3d(0, ${closedOffset + (start - closedOffset) * t}px, 0)`,
+			};
 		}
 	}
 
-	function drawerOverlayTransition(node, params, { direction }) {
-		// If the drawer is closed by the X button or ESC (not by dragging, which hides the overlay earlier), apply transition
-		const duration = !popupToDrawer.current || (direction == "out" && draggedClosed) ? 0 : 500;
-		return drawerOverlayTransitionTapClose(node, params, { duration });
+	function drawerOverlayOutTransition() {
+		if (!popupToDrawer.current) return { duration: 0 };
+		const start = overlayProgress; // Current strength
+		return {
+			...closeTiming,
+			// Fade color opacity and blur strength relative to time factor t (0-1)
+			css: (t) =>
+				`background-color: color-mix(in srgb, var(--overlay-color) ${start * t * 100}%, transparent); backdrop-filter: blur(calc(var(--weak-blur) * ${start * t}));`,
+		};
 	}
 
 	// Drawer logic ------------------------------------------------------------------------------------
@@ -69,45 +64,35 @@
 
 	// Drawer state
 	let dragStartY = $state();
+	let dragStartVerticalOffset;
 	let isDragging = $state(false);
-	let overlayHidden = $state(false);
 	let drawerVerticalOffset = $state(0);
-	let drawerVerticalTransition = $state(false);
 	let velocitySamples = $state([]); // Y positions with timestamps
-	let closeDuration = $state(0);
+	let openAnimationFrame; // Latest open animation frame for cancelling it
 
-	// Continues the swipe from where the drawer was released
-	const animateDrawerClose = (velocity) => {
-		overlayHidden = true;
-		draggedClosed = true;
+	const closedOffset = $derived(uiWindowHeight + DRAWER_HIDDEN_OVERSHOOT);
+	const overlayProgress = $derived(Math.min(1, 1 - drawerVerticalOffset / closedOffset));
 
-		// Px current Y position and target closed Y position
+	// Animate drawer to fully open
+	const animateDrawerOpen = () => {
+		if (drawerVerticalOffset == 0) return; // Skip when the drawer is already fully open
 		const start = drawerVerticalOffset;
-		const target = uiWindowHeight + DRAWER_HIDDEN_OVERSHOOT;
-		closeDuration = clamp((target - start) / Math.max(velocity, 1.5), 180, 420); // Faster flicks close faster
-
 		const startTime = performance.now();
 		const step = (now) => {
-			const progress = Math.min(1, (now - startTime) / closeDuration); // Progress between 0 - 1
-			drawerVerticalTransition = false;
-			drawerVerticalOffset = start + (target - start) * cubicBezier(0.45, 0.55, 0.4, 0.92)(progress);
-
-			// If animation still in progress, repeat, otherwhise finish
-			if (progress < 1) return requestAnimationFrame(step);
-			else {
-				close();
-
-				// Resets after close / unmount
-				drawerVerticalOffset = 0;
-				overlayHidden = false;
-			}
+			const progress = Math.min(1, (now - startTime) / DRAWER_TIMING.duration); // Progress (0-1)
+			drawerVerticalOffset = start * (1 - DRAWER_TIMING.easing(progress));
+			if (progress < 1) openAnimationFrame = requestAnimationFrame(step);
 		};
-		requestAnimationFrame(step);
+		openAnimationFrame = requestAnimationFrame(step);
 	};
 
 	const dragStart = (event) => {
-		// Abort if not a drawer, already auto-closing, or scrolling content
-		if (!popupToDrawer.current || overlayHidden || isScrolledDown(event.target, contentEl)) return;
+		// Abort if not a drawer, or if content should be scrolled by the "finger downwards" movement because it isn't scrolled all the way up
+		if (!popupToDrawer.current || isScrolledDown(event.target, contentEl)) return;
+
+		// Catch the drawer where it is (could still be animating open)
+		cancelAnimationFrame(openAnimationFrame);
+		dragStartVerticalOffset = drawerVerticalOffset;
 		dragStartY = event.touches[0].clientY;
 		velocitySamples = [{ y: dragStartY, time: performance.now() }];
 	};
@@ -117,8 +102,12 @@
 
 		const eventY = event.touches[0].clientY;
 
-		// Cancel if dragging upwards while the touched element or an ancestor up to the content can still scroll down
-		if (!isDragging && eventY <= dragStartY && canScrollDown(event.target, contentEl)) return (dragStartY = null);
+		// Cancel if dragging finger upwards while the touched element (or an ancestor up to the content) can still scroll down
+		// Mainly relevant for the slow stretch animation when the drwaer is dragged upwards (which shouldn't show when content is scrolled down)
+		if (!isDragging && eventY <= dragStartY && canScrollDown(event.target, contentEl)) {
+			dragStartY = null;
+			return animateDrawerOpen(); // Touch  could've stopped the drawer during open, since it's a content scroll not a drag, resume
+		}
 
 		event.preventDefault(); // Prevent page scroll
 		isDragging = true;
@@ -129,8 +118,7 @@
 		while (velocitySamples.length > 2 && now - velocitySamples[0].time > 80) velocitySamples.shift(); // Keep the last 80ms
 
 		// Apply offset
-		drawerVerticalTransition = false;
-		const delta = eventY - dragStartY;
+		const delta = eventY - dragStartY + dragStartVerticalOffset;
 		drawerVerticalOffset = delta > 0 ? delta : delta * 0.05; // Allow dragging the drawer upwards, but make it less effective (that's what the x0.05 is for)
 	};
 
@@ -138,7 +126,7 @@
 		if (dragStartY == null) return;
 		dragStartY = null;
 
-		if (!isDragging) return; // If not dragging, just reset dragStartY and exit (e.g. single tap)
+		if (!isDragging) return animateDrawerOpen(); // Single tap without drag, resume opening if it was caught mid-animation
 		isDragging = false;
 
 		// Calculate velocity
@@ -146,13 +134,12 @@
 		const last = velocitySamples.at(-1);
 		const velocity = last.time > first.time ? (last.y - first.y) / (last.time - first.time) : 0; // Pixels per ms (time is ms)
 
-		// If swiped with enough velocity or past 1/4, animate it shut, otherwise open fully again
-		if (velocity > 0.4 || drawerVerticalOffset > uiWindowHeight * 0.25) animateDrawerClose(velocity);
-		else {
-			// Too little drag, snap back to fully open state
-			drawerVerticalTransition = true;
-			drawerVerticalOffset = 0;
-		}
+		// If swiped with enough velocity or past 35%, animate it shut, otherwise open fully again
+		if (velocity > 0.4 || drawerVerticalOffset > uiWindowHeight * 0.35) {
+			const duration = clamp((closedOffset - drawerVerticalOffset) / Math.max(velocity, 1.5), 180, 420); // Faster drag velocity means lower duration
+			closeTiming = { duration, easing: cubicBezier(0.45, 0.55, 0.4, 0.92) };
+			close();
+		} else animateDrawerOpen(); // Too little drag, snap back to fully open state
 	};
 
 	// Automatic z-indexing ---------------------------------------------------------------------
@@ -213,12 +200,10 @@
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div
 			class="drawer-overlay"
-			in:drawerOverlayTransition
-			out:drawerOverlayTransition
+			out:drawerOverlayOutTransition
 			onclick={close}
-			style:transition="background-color {closeDuration}ms ease-out, backdrop-filter {closeDuration}ms ease-out"
-			style:background-color={overlayHidden ? "transparent" : ""}
-			style:backdrop-filter={overlayHidden ? "blur(0)" : ""}
+			style:background-color="color-mix(in srgb, var(--overlay-color) {overlayProgress * 100}%, transparent)"
+			style:backdrop-filter="blur(calc(var(--weak-blur) * {overlayProgress}))"
 		></div>
 		<div
 			class="ui-window"
@@ -237,8 +222,9 @@
 						: slim
 							? "750px"
 							: "850px"}
-			style:transform={drawerVerticalOffset ? `translate3d(0, ${drawerVerticalOffset}px, 0)` : ""}
-			style:transition={drawerVerticalTransition ? `transform 500ms cubic-bezier(${DRAWER_EASE})` : ""}
+			style:transform={popupToDrawer.current && drawerVerticalOffset
+				? `translate3d(0, ${drawerVerticalOffset}px, 0)`
+				: ""}
 			bind:offsetHeight={uiWindowHeight}
 			{@attach (node) => {
 				// Needed since regular Svelte's touchmove is passive
