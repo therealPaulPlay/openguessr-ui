@@ -64,6 +64,7 @@
 
 	// Drawer state
 	let dragStartY = $state();
+	let dragStartX;
 	let dragStartVerticalOffset;
 	let isDragging = $state(false);
 	let drawerVerticalOffset = $state(0);
@@ -94,6 +95,7 @@
 		cancelAnimationFrame(openAnimationFrame);
 		dragStartVerticalOffset = drawerVerticalOffset;
 		dragStartY = event.touches[0].clientY;
+		dragStartX = event.touches[0].clientX;
 		velocitySamples = [{ y: dragStartY, time: performance.now() }];
 	};
 
@@ -102,11 +104,19 @@
 
 		const eventY = event.touches[0].clientY;
 
-		// Cancel if dragging finger upwards while the touched element (or an ancestor up to the content) can still scroll down
-		// Mainly relevant for the slow stretch animation when the drwaer is dragged upwards (which shouldn't show when content is scrolled down)
-		if (!isDragging && eventY <= dragStartY && canScrollDown(event.target, contentEl)) {
-			dragStartY = null;
-			return animateDrawerOpen(); // Touch  could've stopped the drawer during open, since it's a content scroll not a drag, resume
+		// On the first move, decide whether the gesture drags the drawer or scrolls the content
+		if (!isDragging) {
+			// Horizontal movements belong to the content, e.g. horizontally scrolling elements
+			const isScrollingHorizontally = Math.abs(event.touches[0].clientX - dragStartX) > Math.abs(eventY - dragStartY); // Check if more horizontal movement than vertical
+
+			// Dragging finger upwards while the touched element (or an ancestor up to the content) can still scroll down
+			// Mainly relevant for the slow stretch animation when the drwaer is dragged upwards (which shouldn't show when content is scrolled down)
+			const isScrollingDown = eventY <= dragStartY && canScrollDown(event.target, contentEl);
+
+			if (isScrollingHorizontally || isScrollingDown) {
+				dragStartY = null;
+				return animateDrawerOpen(); // Touch  could've stopped the drawer during open, since it's a content scroll not a drag, resume
+			}
 		}
 
 		event.preventDefault(); // Prevent page scroll
@@ -340,7 +350,7 @@
 		width: 100%;
 		/* Max height is also shorter by the negative --layout-spacer margin bottom */
 		max-height: calc(100dvh - env(safe-area-inset-top));
-		padding-bottom: calc(var(--window-padding) + env(safe-area-inset-bottom) + var(--layout-spacer));
+		padding-bottom: calc(max(var(--window-padding), env(safe-area-inset-bottom)) + var(--layout-spacer));
 		margin-bottom: calc(-1 * var(--layout-spacer));
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
