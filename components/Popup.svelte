@@ -63,6 +63,7 @@
 	let uiWindowHeight = $state();
 
 	// Drawer state
+	let dragTouchId;
 	let dragStartY = $state();
 	let dragStartX;
 	let dragStartVerticalOffset;
@@ -87,27 +88,33 @@
 		openAnimationFrame = requestAnimationFrame(step);
 	};
 
+	// Check if the touch that started the drag is included
+	const findDragTouch = (touches) => [...touches].find((touch) => touch.identifier === dragTouchId);
+
 	const dragStart = (event) => {
-		// Abort if not a drawer, or if content should be scrolled by the "finger downwards" movement because it isn't scrolled all the way up
-		if (!popupToDrawer.current || isScrolledDown(event.target, contentEl)) return;
+		// Abort if not a drawer, already tracking a finger, or if content should be scrolled by the "finger downwards" movement because it isn't scrolled all the way up
+		if (!popupToDrawer.current || dragStartY != null || isScrolledDown(event.target, contentEl)) return;
 
 		// Catch the drawer where it is (could still be animating open)
 		cancelAnimationFrame(openAnimationFrame);
+		const touch = event.changedTouches[0]; // Changed touches lists only new touches, not ones "still" on screen
+		dragTouchId = touch.identifier;
 		dragStartVerticalOffset = drawerVerticalOffset;
-		dragStartY = event.touches[0].clientY;
-		dragStartX = event.touches[0].clientX;
+		dragStartY = touch.clientY;
+		dragStartX = touch.clientX;
 		velocitySamples = [{ y: dragStartY, time: performance.now() }];
 	};
 
 	const drag = (event) => {
-		if (dragStartY == null) return;
+		const touch = findDragTouch(event.touches);
+		if (dragStartY == null || !touch) return;
 
-		const eventY = event.touches[0].clientY;
+		const eventY = touch.clientY;
 
 		// On the first move, decide whether the gesture drags the drawer or scrolls the content
 		if (!isDragging) {
 			// Horizontal movements belong to the content, e.g. horizontally scrolling elements
-			const isScrollingHorizontally = Math.abs(event.touches[0].clientX - dragStartX) > Math.abs(eventY - dragStartY); // Check if more horizontal movement than vertical
+			const isScrollingHorizontally = Math.abs(touch.clientX - dragStartX) > Math.abs(eventY - dragStartY); // Check if more horizontal movement than vertical
 
 			// Dragging finger upwards while the touched element (or an ancestor up to the content) can still scroll down
 			// Mainly relevant for the slow stretch animation when the drwaer is dragged upwards (which shouldn't show when content is scrolled down)
@@ -132,8 +139,8 @@
 		drawerVerticalOffset = delta > 0 ? delta : delta * 0.05; // Allow dragging the drawer upwards, but make it less effective (that's what the x0.05 is for)
 	};
 
-	const dragEnd = () => {
-		if (dragStartY == null) return;
+	const dragEnd = (event) => {
+		if (dragStartY == null || !findDragTouch(event.changedTouches)) return; // Only the dragging finger ends the drag
 		dragStartY = null;
 
 		if (!isDragging) return animateDrawerOpen(); // Single tap without drag, resume opening if it was caught mid-animation
