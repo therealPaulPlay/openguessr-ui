@@ -3,7 +3,7 @@
 	import { Check, SquareArrowOutUpRight, X } from "@lucide/svelte";
 	import { fly } from "svelte/transition";
 
-	let { top = "var(--layout-margin)", onaccept, ondismiss } = $props();
+	let { top = "var(--box-margin)", onaccept, ondismiss } = $props();
 
 	function accept() {
 		if (notification.acceptFunction) {
