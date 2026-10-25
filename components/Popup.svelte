@@ -235,7 +235,7 @@
 			ontouchend={dragEnd}
 			ontouchcancel={dragEnd}
 		>
-			{#if popupToDrawer.current}
+			{#if popupToDrawer.current && !frameless}
 				<div class="drawer-handle"></div>
 			{/if}
 			<button class="close-popup-button standard-button" aria-label="close" onclick={close}
@@ -274,10 +274,6 @@
 		z-index: 10;
 	}
 
-	.frame-less {
-		padding: var(--content-margin) !important;
-	}
-
 	.content {
 		position: relative;
 		overflow-y: auto;
@@ -311,9 +307,13 @@
 		box-shadow:
 			0 2px 100px rgba(5, 6, 10, 0.5),
 			inset 0 0.05rem 1px hsla(0, 0%, 100%, 0.2),
-			inset 0 -0.2rem 1px rgba(0, 0, 2, 0.2) !important;
+			inset 0 -0.2rem 1px rgba(0, 0, 2, 0.2);
 		color: white;
 		pointer-events: auto;
+	}
+
+	.frame-less {
+		padding: var(--content-margin);
 	}
 
 	.drawer-overlay {
@@ -347,9 +347,8 @@
 	}
 
 	.drawer.frame-less {
-		padding-top: calc(var(--layout-margin) * 2) !important;
 		/* Add --layout-spacer since we have the negative --layout-spacer margin bottom */
-		padding-bottom: calc(max(var(--content-margin), env(safe-area-inset-bottom)) + var(--layout-spacer)) !important;
+		padding-bottom: calc(max(var(--content-margin), env(safe-area-inset-bottom)) + var(--layout-spacer));
 	}
 
 	.drawer .content {
