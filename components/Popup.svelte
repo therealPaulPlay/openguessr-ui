@@ -122,7 +122,7 @@
 
 			if (isScrollingHorizontally || isScrollingDown) {
 				dragStartY = null;
-				return animateDrawerOpen(); // Touch  could've stopped the drawer during open, since it's a content scroll not a drag, resume
+				return animateDrawerOpen(); // Touch could've stopped the drawer during open, since it's a content scroll not a drag, resume
 			}
 		}
 
@@ -140,7 +140,7 @@
 	};
 
 	const dragEnd = (event) => {
-		if (dragStartY == null || !findDragTouch(event.changedTouches)) return; // Only the dragging finger ends the drag
+		if (dragStartY == null || !findDragTouch(event.changedTouches)) return; // Only the dragging finger can end the drag
 		dragStartY = null;
 
 		if (!isDragging) return animateDrawerOpen(); // Single tap without drag, resume opening if it was caught mid-animation
@@ -149,14 +149,14 @@
 		// Calculate velocity
 		const first = velocitySamples[0];
 		const last = velocitySamples.at(-1);
-		const velocity = last.time > first.time ? (last.y - first.y) / (last.time - first.time) : 0; // Pixels per ms (time is ms)
+		const velocity = last.time > first.time ? (last.y - first.y) / (last.time - first.time) : 0; // Pixels per ms
 
 		// If swiped with enough velocity or past 35%, animate it shut, otherwise open fully again
 		if (velocity > 0.4 || drawerVerticalOffset > uiWindowHeight * 0.35) {
 			const duration = clamp((closedOffset - drawerVerticalOffset) / Math.max(velocity, 1.5), 180, 420); // Faster drag velocity means lower duration
 			closeTiming = { duration, easing: cubicBezier(0.45, 0.55, 0.4, 0.92) };
 			close();
-		} else animateDrawerOpen(); // Too little drag, snap back to fully open state
+		} else animateDrawerOpen();
 	};
 
 	// Automatic z-indexing ---------------------------------------------------------------------
