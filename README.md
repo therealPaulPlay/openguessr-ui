@@ -343,7 +343,8 @@ The loading spinner component can be displayed while large content loads, such a
 
 The notification component is used for short messages at the top of the screen, optionally with an action. It needs to be mounted. It takes the following props:
 
-- `top`: Distance from the top of the viewport, defaults to `--layout-margin`
+- `top`: Distance from the top of the viewport, defaults to `--box-margin`
+- `offsetSafeArea`: Whether the top position should be offset by the safe area inset, defaults to true
 - `onaccept`: Called when the accept button is used
 - `ondismiss`: Called when the dismiss button is used
 

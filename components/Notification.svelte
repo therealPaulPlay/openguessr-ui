@@ -3,7 +3,7 @@
 	import { Check, SquareArrowOutUpRight, X } from "@lucide/svelte";
 	import { fly } from "svelte/transition";
 
-	let { top = "var(--box-margin)", onaccept, ondismiss } = $props();
+	let { top = "var(--box-margin)", offsetSafeArea = true, onaccept, ondismiss } = $props();
 
 	function accept() {
 		if (notification.acceptFunction) {
@@ -36,7 +36,7 @@
 	);
 </script>
 
-<div class="notification-holder" style:top>
+<div class="notification-holder" style:top style:margin-top={offsetSafeArea ? "env(safe-area-inset-top)" : ""}>
 	{#if notification.visible}
 		<div id="notification-bar" transition:fly={{ y: -20, duration: 250 }}>
 			<p id="notification-text">
@@ -103,7 +103,6 @@
 		position: fixed;
 		left: var(--box-margin);
 		right: var(--box-margin);
-		margin-top: env(safe-area-inset-top);
 		display: flex;
 		justify-content: center;
 		pointer-events: none;
