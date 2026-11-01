@@ -47,6 +47,7 @@ a,
 a:visited,
 a:link,
 a:hover {
+    -webkit-touch-callout: none;
     text-decoration: underline;
     color: white;
     font-size: 22px;
