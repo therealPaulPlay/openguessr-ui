@@ -441,6 +441,8 @@ Options:
 - `zIndex`: Tooltip z-index
 - `mobile`: Set to false to hide the tooltip on mobile
 
+Tooltips with automatic state handling are shown on hover (and on long-press with touch input).
+
 ## Sound effects
 
 UI sound effects are available as `.ogg` files and can be played with any audio library. The `sounds` export maps each name to its file URL:

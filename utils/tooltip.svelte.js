@@ -6,6 +6,8 @@ export function tooltip({ text, imageSrc, imageAspectRatio = "1 / 1", state, onc
         let visible = false;
         let cleanupAutoUpdate;
         let showTimeout = null;
+        let longPressTimeout = null;
+        let suppressClick = false;
 
         const persistent = Boolean(state);
         const closedScale = imageSrc ? 0.85 : 0;
@@ -157,6 +159,43 @@ export function tooltip({ text, imageSrc, imageAspectRatio = "1 / 1", state, onc
             hide();
         }
 
+        // On touch devices, a long press shows the tooltip
+        function onPointerDown(e) {
+            suppressClick = false;
+            if (e.pointerType != "touch" || !e.isPrimary) return;
+
+            // Close the tooltip on any click or other pointer down (scroll, swipe...)
+            const closeLongPressTooltip = () => {
+                suppressClick = false;
+                hide();
+            }
+
+            // After the 500ms timeout, the tooltip is shown
+            clearTimeout(longPressTimeout);
+            longPressTimeout = setTimeout(() => {
+                if (!visible) show();
+                if (visible) {
+                    suppressClick = true;
+                    document.addEventListener('pointerdown', closeLongPressTooltip, { capture: true, once: true });
+                }
+            }, 500);
+        }
+
+        // On pointerup, and pointercancel since cancel can be e.g. a scroll starting
+        function cancelLongPress() {
+            clearTimeout(longPressTimeout);
+            longPressTimeout = null;
+        }
+
+        // Don't trigger the element's click action after a long press
+        function onClick(e) {
+            cancelLongPress(); // Pointerup doesn't fire reliably with clicks (especialy on WK)
+            if (!suppressClick) return hide(); // The click may change what's under the cursor (e.g. a new page) without a pointerleave until the mouse moves
+            suppressClick = false;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+        }
+
         if (persistent) {
             $effect(() => {
                 if (state.visible) scheduleShow();
@@ -165,13 +204,22 @@ export function tooltip({ text, imageSrc, imageAspectRatio = "1 / 1", state, onc
         } else {
             node.addEventListener('pointerenter', onPointerEnter);
             node.addEventListener('pointerleave', onPointerLeave);
+            node.addEventListener('pointerdown', onPointerDown);
+            node.addEventListener('pointerup', cancelLongPress);
+            node.addEventListener('pointercancel', cancelLongPress);
+            node.addEventListener('click', onClick, true);
         }
 
         return () => {
             if (!persistent) {
                 node.removeEventListener('pointerenter', onPointerEnter);
                 node.removeEventListener('pointerleave', onPointerLeave);
+                node.removeEventListener('pointerdown', onPointerDown);
+                node.removeEventListener('pointerup', cancelLongPress);
+                node.removeEventListener('pointercancel', cancelLongPress);
+                node.removeEventListener('click', onClick, true);
             }
+            if (longPressTimeout) clearTimeout(longPressTimeout);
             if (showTimeout) clearTimeout(showTimeout);
             cleanupAutoUpdate?.();
             tooltipElement?.remove();
