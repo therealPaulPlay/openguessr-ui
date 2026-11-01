@@ -59,7 +59,6 @@
 	// Drawer logic ------------------------------------------------------------------------------------
 
 	// Bindings
-	let contentEl = $state();
 	let uiWindowHeight = $state();
 
 	// Drawer state
@@ -93,7 +92,7 @@
 
 	const dragStart = (event) => {
 		// Abort if not a drawer, already tracking a finger, or if content should be scrolled by the "finger downwards" movement because it isn't scrolled all the way up
-		if (!popupToDrawer.current || dragStartY != null || isScrolledDown(event.target, contentEl)) return;
+		if (!popupToDrawer.current || dragStartY != null || isScrolledDown(event.target, event.currentTarget)) return; // Current target is ui-window
 
 		// Catch the drawer where it is (could still be animating open)
 		cancelAnimationFrame(openAnimationFrame);
@@ -118,7 +117,7 @@
 
 			// Dragging finger upwards while the touched element (or an ancestor up to the content) can still scroll down
 			// Mainly relevant for the slow stretch animation when the drwaer is dragged upwards (which shouldn't show when content is scrolled down)
-			const isScrollingDown = eventY <= dragStartY && canScrollDown(event.target, contentEl);
+			const isScrollingDown = eventY <= dragStartY && canScrollDown(event.target, event.currentTarget); // Current target is ui-window
 
 			if (isScrollingHorizontally || isScrollingDown) {
 				dragStartY = null;
@@ -258,7 +257,7 @@
 			<button class="close-popup-button standard-button" aria-label="close" onclick={close}
 				><X strokeWidth={2.25} /></button
 			>
-			<div class="content of-top of-bottom" class:content-frameless={frameless} bind:this={contentEl}>
+			<div class="content of-top of-bottom" class:content-frameless={frameless}>
 				{@render children?.()}
 			</div>
 		</div>
