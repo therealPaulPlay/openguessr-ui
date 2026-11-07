@@ -81,7 +81,7 @@
 }
 
 :is(.standard-button, .content-shadow) svg {
-    filter: drop-shadow(0 0 1.5px var(--content-shadow-color)) drop-shadow(0 0 1.5px var(--content-shadow-color)) drop-shadow(0 0 1.5px var(--content-shadow-color));
+    filter: drop-shadow(0 0 1.5px var(--content-shadow-color)) drop-shadow(0 0 1.5px var(--content-shadow-color));
 }
 
 /* Popup title */
