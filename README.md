@@ -4,9 +4,6 @@ The user interface design system for OpenGuessr. Install via `npm install opengu
 
 Made to be used with [Svelte](https://svelte.dev).
 
-> [!IMPORTANT]
-> While this library is publicly available, commercial use is not permitted.
-
 ## Structure
 
 These core concepts define how UI should be structured.
