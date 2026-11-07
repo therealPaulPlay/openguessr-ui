@@ -288,6 +288,7 @@
 		right: var(--layout-margin);
 		padding: var(--content-margin);
 		z-index: 10;
+		--content-shadow-color: transparent;
 	}
 
 	.content {

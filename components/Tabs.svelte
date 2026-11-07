@@ -75,6 +75,7 @@
 		flex-grow: 1;
 		box-shadow: none !important;
 		pointer-events: auto;
+		--content-shadow-color: transparent;
 	}
 
 	.tab-button:active {

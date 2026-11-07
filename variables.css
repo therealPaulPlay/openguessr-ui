@@ -1,6 +1,7 @@
     :root {
         /* Colors */
         --brand-color: #ff0808;
+        --brand-color-shadow: hsl(0, 100%, 44%);
         --panel-color: rgba(30, 34, 53, 0.7);
         --panel-color-soft: rgba(50, 53, 69, 0.7);
         --box-color: rgba(255, 255, 255, 0.05);

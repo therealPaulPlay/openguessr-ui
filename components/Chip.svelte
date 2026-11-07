@@ -17,6 +17,7 @@
 	{onclick}
 	role={onclick ? "button" : ""}
 	class:chip-red={red}
+	class:content-shadow={red}
 	class:chip-italic={italic}
 	class:muted-opacity={mutedOpacity}
 	{style}
@@ -70,6 +71,7 @@
 	.chip-red {
 		background-color: var(--brand-color);
 		color: white;
+		--content-shadow-color: var(--brand-color-shadow);
 	}
 
 	.chip-italic {

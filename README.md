@@ -56,6 +56,7 @@ These variables are used for colors:
 | Variable | Explanation |
 | -------- | ------- |
 | --brand-color | Primary red |
+| --brand-color-shadow | Shadow for text on red |
 | --panel-color | Blue-ish, for panels |
 | --box-color | Bright transparent for boxes |
 | --line-color | For strokes and separators |
@@ -179,6 +180,8 @@ To create a button, apply the `standard-button` class. This will create a red pr
 There is a tertiary button, and it's created by applying `dark`, but it's not used in combination with other button variants. Instead, it's strictly for repetitive actions to reduce mental load since it is less eye-catching. For example, a sidebar with dozens of items, where each one has a small "X" button to delete it.
 
 Large buttons with short text inside often look unnaturally slim when placed as the only button inside a panel, bumping the padding by adding `wide` resolves this.
+
+Primary buttons add a shadow in `--brand-color-shadow` to text and icons inside them. Buttons with a custom solid background should set `--content-shadow-color` to a darker shade of it. Apply the `content-shadow` class to other non-standard-button elements to mirror this behavior.
 
 ### Icons in buttons
 

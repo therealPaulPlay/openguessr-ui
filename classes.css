@@ -7,7 +7,7 @@
     height: 40px;
     text-align: center;
     white-space: nowrap;
-    transition: filter 250ms ease, box-shadow 250ms ease, transform 150ms ease, color 250ms ease, background-color 250ms ease, opacity 250ms ease;
+    transition: filter 250ms ease, box-shadow 250ms ease, transform 150ms ease, color 250ms ease, background-color 250ms ease, opacity 250ms ease, --content-shadow-color 250ms ease;
     border-radius: var(--content-margin);
     user-select: none;
     background-color: var(--brand-color);
@@ -15,6 +15,7 @@
     border-top: 3px solid rgba(255, 255, 255, 0.2);
     color: white;
     box-shadow: var(--button-shadow);
+    --content-shadow-color: var(--brand-color-shadow);
 }
 
 .standard-button:hover {
@@ -37,10 +38,12 @@
 
 .bright {
     background-color: rgba(255, 255, 255, 0.175);
+    --content-shadow-color: transparent;
 }
 
 .bright-soft {
     background-color: rgba(255, 255, 255, 0.1);
+    --content-shadow-color: transparent;
 }
 
 .dark {
@@ -48,6 +51,7 @@
     border: 3px solid rgba(160, 160, 170, 0.2);
     border-top: 3px solid rgba(200, 200, 210, 0.2);
     box-shadow: var(--button-shadow-dark);
+    --content-shadow-color: transparent;
 }
 
 .popup-bottom-button {
@@ -62,6 +66,22 @@
 
 .wide {
     padding-inline: calc(var(--layout-margin) * 2);
+}
+
+/* Content shadow on brand-colored backgrounds */
+@property --content-shadow-color {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+
+.standard-button,
+.content-shadow {
+    text-shadow: 0 0 3px var(--content-shadow-color), 0 0 3px var(--content-shadow-color), 0 0 3px var(--content-shadow-color), 0 0 3px var(--content-shadow-color);
+}
+
+:is(.standard-button, .content-shadow) svg {
+    filter: drop-shadow(0 0 1.5px var(--content-shadow-color)) drop-shadow(0 0 1.5px var(--content-shadow-color)) drop-shadow(0 0 1.5px var(--content-shadow-color));
 }
 
 /* Popup title */
